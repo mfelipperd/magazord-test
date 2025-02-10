@@ -1,34 +1,28 @@
-import { useState } from "react";
+import { BiChevronDown, BiSearch } from "react-icons/bi";
 
 interface SearchBarProps {
   onSearch: (username: string) => void;
 }
 
 export default function SearchBar({ onSearch }: SearchBarProps) {
-  const [username, setUsername] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (username.trim()) {
-      onSearch(username);
-    }
-  };
-
+  console.log(onSearch);
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2 p-4">
-      <input
-        type="text"
-        placeholder="Buscar usuário do GitHub..."
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="flex-1 p-2 border rounded-md"
-      />
+    <div className="relative flex  items-center gap-3 p-4 bg-neutral-100 h-14">
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        className="bg-gradient-to from- bg-blue-800  to-bg-blue-200 text-white px-6 py-2 rounded-full flex items-center gap-2"
       >
-        Buscar
+        <BiChevronDown />
+        Type
       </button>
-    </form>
+      <button
+        type="submit"
+        className="bg-gradient-to from- bg-blue-800  to-bg-blue-200 text-white px-6 py-2 rounded-full flex items-center gap-2"
+      >
+        <BiChevronDown />
+        Language
+      </button>
+      <BiSearch size={24} className="absolute right-2 text-blue-500" />
+    </div>
   );
 }

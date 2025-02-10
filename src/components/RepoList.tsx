@@ -1,43 +1,50 @@
-import { FaStar, FaCodeBranch } from "react-icons/fa";
+import { Repo } from "../interfaces/IRepository";
+import RepoCard from "./RepoCard";
 
 interface RepoListProps {
-  repositories: {
-    id: number;
-    name: string;
-    description: string;
-    language?: string;
-    stars: number;
-    forks: number;
-    url: string;
-  }[];
+  repositories: Repo[];
+  currentPage: number;
+  nextPage: () => void;
+  prevPage: () => void;
 }
 
-export default function RepoList({ repositories }: RepoListProps) {
+export default function RepoList({
+  repositories,
+  currentPage,
+  nextPage,
+  prevPage,
+}: RepoListProps) {
   return (
-    <div className="p-4">
-      {repositories.map((repo) => (
-        <div key={repo.id} className="border-b pb-4 mb-4">
-          <h2 className="text-blue-500 font-semibold">
-            <a href={repo.url} target="_blank" rel="noopener noreferrer">
-              {repo.name}
-            </a>
-          </h2>
-          <p className="text-gray-600 text-sm">
-            {repo.description || "Sem descrição disponível"}
-          </p>
-          {repo.language && (
-            <p className="text-sm text-gray-500 mt-1">{repo.language}</p>
-          )}
-          <div className="flex gap-4 text-sm text-gray-500 mt-2">
-            <span className="flex items-center gap-1">
-              <FaStar /> {repo.stars}
-            </span>
-            <span className="flex items-center gap-1">
-              <FaCodeBranch /> {repo.forks}
-            </span>
-          </div>
-        </div>
-      ))}
+    <div>
+      {repositories.length === 0 ? (
+        <p className="text-center text-gray-500">
+          Nenhum repositório encontrado.
+        </p>
+      ) : (
+        repositories.map((repo) => <RepoCard key={repo.id} repo={repo} />)
+      )}
+
+      {/* Paginação */}
+      <div className="flex justify-between items-center mt-4">
+        <button
+          onClick={prevPage}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 rounded ${
+            currentPage === 1
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-blueCustom-500 text-white"
+          }`}
+        >
+          Anterior
+        </button>
+        <span className="text-gray-700">Página {currentPage}</span>
+        <button
+          onClick={nextPage}
+          className="px-4 py-2 bg-blueCustom-500 text-white rounded"
+        >
+          Próxima
+        </button>
+      </div>
     </div>
   );
 }

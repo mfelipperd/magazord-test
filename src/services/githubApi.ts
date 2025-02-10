@@ -15,6 +15,8 @@ const fetcher = async (url: string) => {
 export function useGithubApi(initialUsername: string) {
   const [username, setUsername] = useState(initialUsername);
   const [manualFetchTrigger, setManualFetchTrigger] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // Número de repositórios por página
 
   const {
     data: repositories,
@@ -22,7 +24,9 @@ export function useGithubApi(initialUsername: string) {
     isLoading: repoLoading,
     mutate: refreshRepositories,
   } = useSWR(
-    username ? `${GITHUB_API_BASE_URL}/${username}/repos` : null,
+    username
+      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
+      : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
@@ -33,12 +37,14 @@ export function useGithubApi(initialUsername: string) {
     isLoading: starredLoading,
     mutate: refreshStarred,
   } = useSWR(
-    username ? `${GITHUB_API_BASE_URL}/${username}/starred` : null,
+    username
+      ? `${GITHUB_API_BASE_URL}/${username}/starred?page=${currentPage}&per_page=${itemsPerPage}`
+      : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Atualiza os dados sempre que o username mudar
+  // Atualiza os dados sempre que o username mudar ou a página mudar
   useEffect(() => {
     if (manualFetchTrigger) {
       console.log("🔄 Atualizando dados manualmente...");
@@ -46,11 +52,15 @@ export function useGithubApi(initialUsername: string) {
       refreshStarred();
       setManualFetchTrigger(false);
     }
-  }, [manualFetchTrigger]);
+  }, [manualFetchTrigger, currentPage]);
 
   // Métodos para atualizar os repositórios manualmente
   const getRepositories = () => setManualFetchTrigger(true);
   const getStarredRepositories = () => setManualFetchTrigger(true);
+
+  // Métodos de Paginação
+  const nextPage = () => setCurrentPage((prev) => prev + 1);
+  const prevPage = () => setCurrentPage((prev) => Math.max(1, prev - 1));
 
   return {
     repositories: repositories || [],
@@ -61,5 +71,8 @@ export function useGithubApi(initialUsername: string) {
     error: repoError || starredError,
     username,
     setUsername,
+    currentPage,
+    nextPage,
+    prevPage,
   };
 }

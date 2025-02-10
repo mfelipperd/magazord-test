@@ -1,62 +1,57 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
+
 @tailwind utilities;
 
-/* Fontes padrão */
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-}
+@layer base {
+  :root {
+    --background: 0 0% 97%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 207, 65%, 35%; /* Azul Escuro */
+    --secondary: 210, 40%, 96.1%; /* Cinza Claro */
+    --muted: 210, 40%, 96.1%;
+    --destructive: 0, 84.2%, 60.2%;
+    --border: 214.3, 31.8%, 91.4%;
+    --radius: 0.5rem;
 
-/* Removendo estilos padrões */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    /* 🎨 Cores Personalizadas */
+    --grayCustom-100: #f8f8f8; /* Cinza Muito Claro */
+    --grayCustom-200: #dbdbdb; /* Cinza Claro */
+    --grayCustom-300: #989898; /* Cinza Médio */
 
-/* Definição para o body */
-body {
-  background-color: #ffffff;
-  color: #213547;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
+    --blueCustom-100: #0587ff; /* Azul Claro */
+    --blueCustom-500: #0056a6; /* Azul Escuro */
+  }
 
-/* Links */
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+  .dark {
+    --background: 222.2, 84%, 4.9%;
+    --foreground: 210, 40%, 98%;
+  }
 
-a:hover {
-  color: #535bf2;
-}
+  /* 🔥 Scrollbar */
+  .scrollable-content {
+    overflow-y: hidden;
+    scrollbar-gutter: stable;
+    transition: overflow-y 0.3s ease;
+  }
 
-/* Botões */
-button {
-  @apply rounded-lg border border-transparent px-4 py-2 text-sm font-medium transition-all duration-300;
-  background-color: #f9f9f9;
-}
+  .scrollable-content:hover,
+  .scrollable-content:focus-within {
+    overflow-y: auto;
+  }
 
-button:hover {
-  border-color: #646cff;
-}
+  /* 🔥 Scrollbar Estilizada */
+  ::-webkit-scrollbar {
+    width: 5px;
+    transition: opacity 0.3s ease;
+  }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  ::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+  }
 
-/* Modo escuro */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #242424;
-    color: rgba(255, 255, 255, 0.87);
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gray-200);
   }
 }
