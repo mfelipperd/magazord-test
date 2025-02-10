@@ -19,7 +19,7 @@ export default function UserProfile({
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="flex flex-col items-center text-center p-4 min-[733px]:items-start min-[733px]:text-left  ">
+    <div className="flex flex-col items-center text-center  min-[733px]:items-start min-[733px]:text-left min-[733px]:w-full">
       {/* Avatar */}
       <img
         src={avatarUrl}
@@ -36,7 +36,7 @@ export default function UserProfile({
       <div className="block min-[733px]:hidden">
         <button
           onClick={() => setShowMore(!showMore)}
-          className="text-[var(--blue-500)] mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out"
+          className="text-blue-500 mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out"
         >
           Informações Adicionais{" "}
           {showMore ? <FaChevronUp /> : <FaChevronDown />}
@@ -46,7 +46,7 @@ export default function UserProfile({
         <div
           className={`transition-all duration-500 ease-in-out overflow-hidden ${
             showMore ? "max-h-40 opacity-100 p-3" : "max-h-0 opacity-0"
-          } bg-[var(--gray-100)] rounded-md w-full mt-2`}
+          } bg-gray-100 rounded-md w-full mt-2`}
         >
           {extraInfo?.map((info, index) => (
             <p key={index} className="text-sm text-gray-700">

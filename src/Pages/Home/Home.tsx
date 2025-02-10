@@ -19,6 +19,7 @@ export default function Home() {
     currentPage,
     nextPage,
     prevPage,
+    githubUser,
   } = useGithubApi("facebook");
 
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">(
@@ -38,23 +39,30 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="flex flex-col min-[733px]:flex-row w-full max-w-5xl mx-auto p-4">
+      {/* 🔥 Layout 100% sem margens laterais */}
+      <div className="flex flex-col min-[733px]:flex-row w-full px-0">
+        {/* 🔥 Coluna do UserProfile */}
         <div className="min-[733px]:w-[217px]">
           <UserProfile
-            avatarUrl={`https://github.com/${username}.png`}
-            name="Gabriel Cordeiro"
-            role="Head Development Team"
-            company="Magazord"
+            avatarUrl={githubUser?.avatar_url || ""}
+            name={
+              githubUser?.name || githubUser?.login || "Usuário Desconhecido"
+            }
+            role={githubUser?.bio || "Sem descrição disponível"}
+            company={githubUser?.company || "Sem empresa cadastrada"}
             extraInfo={[
-              "Magazord - plataforma",
-              "Rio do Sul - SC",
-              "Cordas.hub.uok",
-              "Gabriel.s.cordeiro",
-            ]}
+              githubUser?.location ? `🌍 ${githubUser.location}` : "",
+              githubUser?.blog ? `🔗 ${githubUser.blog}` : "",
+              githubUser?.twitter_username
+                ? `🐦 Twitter: @${githubUser.twitter_username}`
+                : "",
+              githubUser?.html_url ? `💻 GitHub: ${githubUser.html_url}` : "",
+            ].filter(Boolean)}
           />
         </div>
 
-        <div className="min-[733px]:w-3/5 flex flex-col">
+        {/* 🔥 Coluna do Conteúdo (Tabs, Search e Lista) */}
+        <div className="flex-1 flex flex-col ">
           <Tabs
             activeTab={activeTab}
             setActiveTab={setActiveTab}

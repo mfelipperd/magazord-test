@@ -1,23 +1,43 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
+import {
+  githubMockRepositories,
+  githubMockStarredRepositories,
+  githubMockUser,
+} from "../mocks/githubMocks";
 
 const GITHUB_API_BASE_URL = "https://api.github.com/users";
 
 const fetcher = async (url: string) => {
   console.log(`🔄 Fetching data from: ${url}`);
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Erro ${response.status}: ${response.statusText}`);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Erro ${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.warn("⚠️ API do GitHub caiu! Usando Mock.");
+    if (url.includes("/starred")) return githubMockStarredRepositories;
+    if (url.includes("/repos")) return githubMockRepositories;
+    return githubMockUser;
   }
-  return response.json();
 };
 
 export function useGithubApi(initialUsername: string) {
   const [username, setUsername] = useState(initialUsername);
   const [manualFetchTrigger, setManualFetchTrigger] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10; // Número de repositórios por página
+  const itemsPerPage = 10;
 
+  // 🔥 Dados do usuário
+  const { data: githubUser, error: userError } = useSWR(
+    username ? `${GITHUB_API_BASE_URL}/${username}` : null,
+    fetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
+  // 🔥 Repositórios
   const {
     data: repositories,
     error: repoError,
@@ -31,6 +51,7 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
+  // 🔥 Starred Repositories
   const {
     data: starredRepositories,
     error: starredError,
@@ -44,7 +65,7 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Atualiza os dados sempre que o username mudar ou a página mudar
+  // 🔄 Atualiza ao mudar username ou página
   useEffect(() => {
     if (manualFetchTrigger) {
       console.log("🔄 Atualizando dados manualmente...");
@@ -54,21 +75,19 @@ export function useGithubApi(initialUsername: string) {
     }
   }, [manualFetchTrigger, currentPage]);
 
-  // Métodos para atualizar os repositórios manualmente
   const getRepositories = () => setManualFetchTrigger(true);
   const getStarredRepositories = () => setManualFetchTrigger(true);
-
-  // Métodos de Paginação
   const nextPage = () => setCurrentPage((prev) => prev + 1);
   const prevPage = () => setCurrentPage((prev) => Math.max(1, prev - 1));
 
   return {
+    githubUser,
     repositories: repositories || [],
     starredRepositories: starredRepositories || [],
     getRepositories,
     getStarredRepositories,
     loading: repoLoading || starredLoading,
-    error: repoError || starredError,
+    error: userError || repoError || starredError,
     username,
     setUsername,
     currentPage,
