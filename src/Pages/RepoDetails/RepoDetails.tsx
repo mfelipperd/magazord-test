@@ -1,29 +1,24 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import {
-  FaCodeBranch,
   FaStar,
-  FaEye,
-  FaLink,
-  FaBug,
-  FaComments,
+  FaCodeBranch,
+  FaExclamationCircle,
+  FaArrowLeft,
 } from "react-icons/fa";
 import {
   useRepositoryDetails,
   useRepositoryIssues,
 } from "../../services/githubApi";
-import { IssueComments } from "../../components/IssueComments";
+import { IIssue } from "../../interfaces/IRepository";
 
 export default function RepositoryDetails() {
   const { owner, repoName } = useParams();
-
-  const { repoDetails, error, isLoading } = useRepositoryDetails(
+  const navigate = useNavigate();
+  const { repoDetails, isLoading, error } = useRepositoryDetails(
     owner!,
     repoName!,
   );
   const { issues } = useRepositoryIssues(owner!, repoName!);
-  const [selectedIssue, setSelectedIssue] = useState<number | null>(null);
 
   if (isLoading)
     return <p className="text-center text-gray-500">Carregando...</p>;
@@ -33,91 +28,68 @@ export default function RepositoryDetails() {
         Erro ao carregar o repositório.
       </p>
     );
-  if (!repoDetails)
-    return <p className="text-center text-gray-500">Nenhum dado encontrado.</p>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold text-gray-900">
-        {repoDetails.full_name}
-      </h1>
-      <p className="text-gray-600 mt-2">
-        {repoDetails.description || "Sem descrição disponível"}
-      </p>
-
-      <div className="flex items-center gap-6 mt-4 text-gray-700">
-        <span className="flex items-center gap-2">
-          <FaStar className="text-yellow-500" /> {repoDetails.stargazers_count}
-        </span>
-        <span className="flex items-center gap-2">
-          <FaCodeBranch className="text-gray-500" /> {repoDetails.forks_count}
-        </span>
-        <span className="flex items-center gap-2">
-          <FaEye className="text-gray-500" /> {repoDetails.watchers_count}
-        </span>
-      </div>
-
-      <div className="mt-6">
-        <a
-          href={repoDetails.html_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-blue-500 hover:underline"
+    <div className="min-h-screen bg-gray-100 p-6">
+      <div className="flex justify-between items-center max-w-3xl mx-auto">
+        <button
+          onClick={() => navigate(-1)}
+          className="text-gray-600 hover:text-black flex items-center gap-2"
         >
-          <FaLink /> Acessar no GitHub
-        </a>
+          <FaArrowLeft />
+          <span>Voltar</span>
+        </button>
       </div>
 
-      <div className="mt-6">
-        <h2 className="text-lg font-semibold text-gray-900">Issues Abertas</h2>
-        <ul className="mt-2 text-gray-700">
-          {issues.length === 0 ? (
-            <p className="text-gray-500">Nenhuma issue encontrada.</p>
-          ) : (
-            issues.slice(0, 5).map((issue: any) => (
-              <li
-                key={issue.id}
-                className="py-2 flex flex-col border-b border-gray-200"
-              >
-                <div className="flex items-center gap-2">
-                  <FaBug className="text-red-500" />
-                  <a
-                    href={issue.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    {issue.title}
-                  </a>
-                </div>
-                <div className="flex items-center gap-2 mt-1 text-sm text-gray-600">
-                  <img
-                    src={issue.user.avatar_url}
-                    alt={issue.user.login}
-                    className="w-6 h-6 rounded-full"
-                  />
-                  <span>{issue.user.login}</span>
-                  <span>({issue.comments} comentários)</span>
-                  <button
-                    className="ml-auto text-xs text-blue-500 hover:underline flex items-center"
-                    onClick={() => setSelectedIssue(issue.number)}
-                  >
-                    <FaComments className="mr-1" />
-                    Ver Comentários
-                  </button>
-                </div>
+      <div className="max-w-3xl mx-auto bg-white p-6 shadow-md rounded-md mt-4">
+        <div className="flex items-center gap-4">
+          <img
+            src={`https://github.com/${owner}.png`}
+            alt={repoDetails.full_name}
+            className="w-14 h-14 rounded-full"
+          />
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              {repoDetails.full_name}
+            </h1>
+            <p className="text-gray-600">
+              {repoDetails.description || "Sem descrição disponível"}
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-between mt-4 text-gray-700 text-lg font-semibold">
+          <div className="flex flex-col items-center">
+            <FaStar className="text-yellow-500" />
+            <span>{repoDetails.stargazers_count.toLocaleString()} Stars</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaCodeBranch className="text-gray-500" />
+            <span>{repoDetails.forks_count.toLocaleString()} Forks</span>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaExclamationCircle className="text-red-500" />
+            <span>{issues.length} Issues abertas</span>
+          </div>
+        </div>
+      </div>
 
-                {selectedIssue === issue.number && (
-                  <IssueComments
-                    owner={owner!}
-                    repoName={repoName!}
-                    issueNumber={issue.number}
-                  />
-                )}
-              </li>
-            ))
-          )}
-        </ul>
+      <div className="max-w-3xl mx-auto mt-6">
+        {issues.length === 0 ? (
+          <p className="text-center text-gray-500">Nenhuma issue aberta.</p>
+        ) : (
+          issues.slice(0, 5).map((issue: IIssue) => (
+            <div
+              key={issue.id}
+              className="bg-white p-4  rounded-md mt-4 cursor-pointer hover:bg-gray-50 hover:translate-x-1.5 transition-all duration-300"
+              onClick={() => window.open(issue.html_url, "_blank")}
+            >
+              <h2 className="text-md font-semibold text-gray-800">
+                {issue.title}
+              </h2>
+              <p className="text-gray-500 text-sm mt-1">{issue.user.login}</p>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

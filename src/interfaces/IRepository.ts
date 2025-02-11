@@ -21,3 +21,14 @@ export interface Repo {
   created_at: string;
   updated_at: string;
 }
+
+import { Key } from "react";
+
+export interface IIssue {
+  id: Key | null | undefined;
+  html_url: string;
+  title: string;
+  user: {
+    login: string;
+  };
+}
