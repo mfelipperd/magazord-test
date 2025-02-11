@@ -152,19 +152,3 @@ export function useRepositoryIssues(owner: string, repoName: string) {
 
   return { issues: data || [], error, isLoading };
 }
-
-export function useIssueComments(
-  owner: string,
-  repoName: string,
-  issueNumber: number,
-) {
-  const { data, error, isLoading } = useSWR(
-    owner && repoName && issueNumber
-      ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}/issues/${issueNumber}/comments`
-      : null,
-    fetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false },
-  );
-
-  return { comments: data || [], error, isLoading };
-}
