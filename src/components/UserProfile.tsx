@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
 interface UserProfileProps {
   avatarUrl: string;
@@ -32,14 +32,18 @@ export default function UserProfile({
       <p className="text-sm text-gray-600">{role}</p>
       <p className="text-sm text-gray-500">{company}</p>
 
-      <div className="block min-[733px]:hidden">
-        <button
-          onClick={() => setShowMore(!showMore)}
-          className="text-sky-500 mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out"
-        >
-          Informações Adicionais{" "}
-          {showMore ? <FaChevronUp /> : <FaChevronDown />}
-        </button>
+      <div className=" w-full  min-[733px]:hidden">
+        <div className="w-full flex justify-center items-center">
+          <button
+            onClick={() => setShowMore(!showMore)}
+            className="text-sky-500  mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out  "
+          >
+            Informações Adicionais{" "}
+            <FaChevronDown
+              className={`${showMore ? "rotate-180" : ""} transition-all duration-200`}
+            />
+          </button>
+        </div>
 
         <div
           className={`transition-all duration-500 ease-in-out overflow-hidden ${
@@ -47,7 +51,7 @@ export default function UserProfile({
           } bg-gray-100 rounded-md w-full mt-2`}
         >
           {extraInfo?.map((info, index) => (
-            <p key={index} className="text-sm text-gray-700">
+            <p key={index} className="text-sm text-sky-600 text-start">
               {info}
             </p>
           ))}
