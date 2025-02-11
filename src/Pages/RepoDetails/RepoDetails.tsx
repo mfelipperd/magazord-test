@@ -13,13 +13,11 @@ export default function RepositoryDetails() {
   const { owner, repoName } = useParams();
   const navigate = useNavigate();
   const { repoDetails, issues } = useRepoStore();
-  const { loading, error } = useRepositoryData(owner!, repoName!); // Hook que busca os dados
+  const { loading, error } = useRepositoryData(owner!, repoName!);
 
-  // Exibir loading enquanto os dados são carregados
   if (loading)
     return <p className="text-center text-gray-500">Carregando...</p>;
 
-  // Exibir erro caso a busca falhe
   if (error)
     return (
       <p className="text-center text-red-500">
@@ -27,7 +25,6 @@ export default function RepositoryDetails() {
       </p>
     );
 
-  // Se `repoDetails` ainda estiver `null`, exibir mensagem de carregamento
   if (!repoDetails)
     return (
       <p className="text-center text-gray-500">Nenhum detalhe encontrado.</p>

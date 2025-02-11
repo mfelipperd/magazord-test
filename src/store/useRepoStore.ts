@@ -4,7 +4,7 @@ import { Repo, IIssue } from "../interfaces/IRepository";
 
 interface RepoStore {
   githubUser: any | null;
-  originalRepositories: Repo[]; // 🔹 Nova propriedade para armazenar os repositórios originais
+  originalRepositories: Repo[];
   repositories: Repo[];
   starredRepos: Repo[];
   languages: string[];
@@ -14,7 +14,7 @@ interface RepoStore {
   issues: IIssue[];
   setGithubUser: (user: any) => void;
   setRepositories: (repos: Repo[]) => void;
-  resetRepositories: () => void; // 🔹 Nova função para restaurar os repositórios originais
+  resetRepositories: () => void;
   setStarredRepositories: (repos: Repo[]) => void;
   setLanguages: (languages: string[]) => void;
   setRepoTypes: (types: string[]) => void;
@@ -27,7 +27,7 @@ interface RepoStore {
 
 export const useRepoStore = create<RepoStore>((set) => ({
   githubUser: null,
-  originalRepositories: [], // 🔹 Armazena a lista original
+  originalRepositories: [],
   repositories: [],
   starredRepos: [],
   languages: [],
@@ -43,12 +43,12 @@ export const useRepoStore = create<RepoStore>((set) => ({
       originalRepositories:
         state.originalRepositories.length > 0
           ? state.originalRepositories
-          : repos, // 🔹 Apenas define os originais se ainda não estiverem definidos
+          : repos,
     })),
 
   resetRepositories: () =>
     set((state) => ({
-      repositories: state.originalRepositories, // 🔹 Restaura os originais
+      repositories: state.originalRepositories,
     })),
 
   setStarredRepositories: (repos) => set({ starredRepos: repos }),

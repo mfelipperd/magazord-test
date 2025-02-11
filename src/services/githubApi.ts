@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr";
 import { useEffect } from "react";
-import { useRepoStore } from "../store/useRepoStore"; // Zustand
+import { useRepoStore } from "../store/useRepoStore";
 import { useSearchStore } from "../store/useSearchStore";
 import { fetcher } from "../utils/fetcher";
 
@@ -21,14 +21,12 @@ export function useGithubApi(username: string) {
   const { selectedLanguages, selectedRepoTypes } = useSearchStore();
   const itemsPerPage = 10;
 
-  // Buscar usuário do GitHub
   const { data: githubUser, error: userError } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}` : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Buscar repositórios do usuário
   const { data: repositoriesData, error: repoError } = useSWR(
     username
       ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}${
@@ -45,7 +43,6 @@ export function useGithubApi(username: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Buscar repositórios favoritos do usuário
   const { data: starredRepositoriesData, error: starredError } = useSWR(
     username
       ? `${GITHUB_API_BASE_URL}/${username}/starred?page=${currentPage}&per_page=${itemsPerPage}`
@@ -54,7 +51,6 @@ export function useGithubApi(username: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Buscar linguagens utilizadas nos repositórios
   const { data: languagesData } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
     async (url) => {
@@ -66,7 +62,6 @@ export function useGithubApi(username: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Buscar tipos de repositórios
   const { data: repoTypesData } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
     async (url) => {
@@ -91,7 +86,6 @@ export function useGithubApi(username: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // Atualizar Zustand quando os dados forem carregados
   useEffect(() => {
     if (githubUser) setGithubUser(githubUser);
     if (repositoriesData) setRepositories(repositoriesData);
@@ -107,7 +101,6 @@ export function useGithubApi(username: string) {
     repoTypesData,
   ]);
 
-  // Funções para alterar estado global
   const nextPage = () => setCurrentPage(currentPage + 1);
   const prevPage = () => setCurrentPage(currentPage - 1);
 
@@ -125,9 +118,6 @@ export function useGithubApi(username: string) {
   };
 }
 
-/**
- * Hook para buscar detalhes de um repositório e suas issues.
- */
 export function useRepositoryData(owner: string, repoName: string) {
   const { setRepoDetails, setIssues, repoDetails, issues } = useRepoStore();
 

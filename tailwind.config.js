@@ -23,15 +23,15 @@ export default {
       ],
       colors: {
         grayCustom: {
-          DEFAULT: "#DBDBDB", // Cinza médio
-          100: "#F8F8F8", // Cinza muito claro
-          200: "#DBDBDB", // Cinza claro
-          300: "#989898", // Cinza escuro
+          DEFAULT: "#DBDBDB",
+          100: "#F8F8F8",
+          200: "#DBDBDB",
+          300: "#989898",
         },
         blueCustom: {
-          DEFAULT: "#0056A6", // Azul escuro
-          100: "#0587FF", // Azul claro
-          500: "#0056A6", // Azul escuro
+          DEFAULT: "#0056A6",
+          100: "#0587FF",
+          500: "#0056A6",
         },
       },
       animation: {

@@ -23,7 +23,7 @@ export default function SearchBar() {
 
   const handleSearch = () => {
     if (!searchValue.trim()) {
-      resetRepositories(); // 🔹 Restaura a lista original ao apagar a busca
+      resetRepositories();
       return;
     }
 
