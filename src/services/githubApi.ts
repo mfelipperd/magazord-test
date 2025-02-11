@@ -65,6 +65,51 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
+  // 🔥 Busca de Linguagens disponíveis (usado nos filtros)
+  const {
+    data: languages,
+    error: languageError,
+    isLoading: languageLoading,
+  } = useSWR(
+    username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
+    async (url) => {
+      const repos = await fetcher(url);
+      return Array.from(
+        new Set(repos.map((repo: any) => repo.language).filter(Boolean)),
+      );
+    },
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
+  // 🔥 Busca de Tipos de Repositórios (exemplo: Forks, Mirrors, Arquivados)
+  const {
+    data: repoTypes,
+    error: typeError,
+    isLoading: typeLoading,
+  } = useSWR(
+    username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
+    async (url) => {
+      const repos = await fetcher(url);
+      return ["All", "Sources", "Forks", "Archived", "Mirrors"].filter((type) =>
+        repos.some((repo: any) => {
+          switch (type) {
+            case "Forks":
+              return repo.fork;
+            case "Archived":
+              return repo.archived;
+            case "Mirrors":
+              return repo.mirror_url !== null;
+            case "Sources":
+              return !repo.fork && !repo.archived && repo.mirror_url === null;
+            default:
+              return true;
+          }
+        }),
+      );
+    },
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
   // 🔄 Atualiza ao mudar username ou página
   useEffect(() => {
     if (manualFetchTrigger) {
@@ -84,10 +129,12 @@ export function useGithubApi(initialUsername: string) {
     githubUser,
     repositories: repositories || [],
     starredRepositories: starredRepositories || [],
+    languages: languages || [],
+    repoTypes: repoTypes || [],
     getRepositories,
     getStarredRepositories,
-    loading: repoLoading || starredLoading,
-    error: userError || repoError || starredError,
+    loading: repoLoading || starredLoading || languageLoading || typeLoading,
+    error: userError || repoError || starredError || languageError || typeError,
     username,
     setUsername,
     currentPage,

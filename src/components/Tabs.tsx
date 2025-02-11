@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { FaBook, FaStar } from "react-icons/fa";
+
 interface TabsProps {
   setActiveTab: React.Dispatch<
     React.SetStateAction<"repositories" | "starred">
@@ -14,42 +16,52 @@ export default function Tabs({
   repoCount,
   starredCount,
 }: TabsProps) {
+  const [indicatorStyle, setIndicatorStyle] = useState(
+    activeTab === "repositories" ? "translate-x-0" : "translate-x-full",
+  );
+
+  const handleTabClick = (tab: "repositories" | "starred") => {
+    setActiveTab(tab);
+    setIndicatorStyle(
+      tab === "repositories" ? "translate-x-0" : "translate-x-full",
+    );
+  };
+
   return (
-    <div className=" flex space-x-6 pb-2 transition-all duration-700 ease-in-out">
-      {/* Aba de Repositórios */}
+    <div className="relative flex space-x-6 pb-2 max-w-[25rem] mb-12 ">
+      {/* Indicador animado */}
+      <div
+        className={`absolute bottom-0 left-0 w-1/2 h-[2px] bg-red-500 transition-transform duration-500 ease-in-out ${indicatorStyle}`}
+      ></div>
+
+      {/* 🔹 Aba de Repositórios */}
       <button
         className={`flex-1 relative flex justify-center items-center gap-3 pb-2 cursor-pointer ${
           activeTab === "repositories"
             ? "text-black font-semibold"
             : "text-gray-400"
         }`}
-        onClick={() => setActiveTab("repositories")}
+        onClick={() => handleTabClick("repositories")}
       >
         <FaBook className="text-lg" />
         <span>Repositories</span>
-        <span className="text-sm bg-neutral-100 text-grayCustom-300 w-[40px] border border-gray-300 py-0.5 rounded-full">
+        <span className="text-sm bg-neutral-100 text-gray-500 w-[40px] border border-gray-300 py-0.5 rounded-full">
           {repoCount}
         </span>
-        {activeTab === "repositories" && (
-          <div className="absolute left-0 bottom-0 w-full h-[2px] bg-red-400"></div>
-        )}
       </button>
 
-      {/* Aba de Favoritos */}
+      {/* 🔹 Aba de Favoritos */}
       <button
-        className={`flex-1 justify-center relative flex items-center gap-3 pb-2 cursor-pointer ${
+        className={`flex-1 relative flex justify-center items-center gap-3 pb-2 cursor-pointer ${
           activeTab === "starred" ? "text-black font-semibold" : "text-gray-400"
         }`}
-        onClick={() => setActiveTab("starred")}
+        onClick={() => handleTabClick("starred")}
       >
         <FaStar className="text-lg" />
         <span>Starred</span>
-        <span className="text-sm bg-neutral-100 text-grayCustom-300 w-[40px] border border-gray-300 py-0.5 rounded-full">
+        <span className="text-sm bg-neutral-100 text-gray-500 w-[40px] border border-gray-300 py-0.5 rounded-full">
           {starredCount}
         </span>
-        {activeTab === "starred" && (
-          <div className="absolute left-0 bottom-0 w-full h-[2px] bg-red-400"></div>
-        )}
       </button>
     </div>
   );

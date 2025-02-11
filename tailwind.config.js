@@ -28,6 +28,15 @@ export default {
           500: "#0056A6", // Azul escuro
         },
       },
+      animation: {
+        "slide-up": "slideUp 0.4s ease-in-out forwards",
+      },
+      keyframes: {
+        slideUp: {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+      },
     },
   },
   plugins: [],

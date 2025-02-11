@@ -24,7 +24,9 @@ export default function UserProfile({
       <img
         src={avatarUrl}
         alt="User Avatar"
-        className="w-20 h-20 min-[733px]:w-24 min-[733px]:h-24 rounded-full shadow-md"
+        width={150}
+        height={150}
+        className=" min-[733px]:w-24 min-[733px]:h-24 rounded-full shadow-md"
       />
 
       {/* Nome e Cargo */}
