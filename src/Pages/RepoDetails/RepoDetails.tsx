@@ -5,28 +5,32 @@ import {
   FaExclamationCircle,
   FaArrowLeft,
 } from "react-icons/fa";
-import {
-  useRepositoryDetails,
-  useRepositoryIssues,
-} from "../../services/githubApi";
+import { useRepoStore } from "../../store/useRepoStore";
+import { useRepositoryData } from "../../services/githubApi";
 import { IIssue } from "../../interfaces/IRepository";
 
 export default function RepositoryDetails() {
   const { owner, repoName } = useParams();
   const navigate = useNavigate();
-  const { repoDetails, isLoading, error } = useRepositoryDetails(
-    owner!,
-    repoName!,
-  );
-  const { issues } = useRepositoryIssues(owner!, repoName!);
+  const { repoDetails, issues } = useRepoStore();
+  const { loading, error } = useRepositoryData(owner!, repoName!); // Hook que busca os dados
 
-  if (isLoading)
+  // Exibir loading enquanto os dados são carregados
+  if (loading)
     return <p className="text-center text-gray-500">Carregando...</p>;
+
+  // Exibir erro caso a busca falhe
   if (error)
     return (
       <p className="text-center text-red-500">
         Erro ao carregar o repositório.
       </p>
+    );
+
+  // Se `repoDetails` ainda estiver `null`, exibir mensagem de carregamento
+  if (!repoDetails)
+    return (
+      <p className="text-center text-gray-500">Nenhum detalhe encontrado.</p>
     );
 
   return (
@@ -80,7 +84,7 @@ export default function RepositoryDetails() {
           issues.slice(0, 5).map((issue: IIssue) => (
             <div
               key={issue.id}
-              className="bg-white p-4  rounded-md mt-4 cursor-pointer hover:bg-gray-50 hover:translate-x-1.5 transition-all duration-300"
+              className="bg-white p-4 rounded-md mt-4 cursor-pointer hover:bg-gray-50 hover:translate-x-1.5 transition-all duration-300"
               onClick={() => window.open(issue.html_url, "_blank")}
             >
               <h2 className="text-md font-semibold text-gray-800">

@@ -1,43 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import UserProfile from "../../components/UserProfile";
 import Tabs from "../../components/Tabs";
 import RepoList from "../../components/RepoList";
 import SearchBar from "../../components/SearchBar";
-import { useGithubApi } from "../../services/githubApi";
+import { useRepoStore } from "../../store/useRepoStore";
 
 export default function Home() {
-  const {
-    repositories,
-    starredRepositories,
-    getRepositories,
-    getStarredRepositories,
-    loading,
-    error,
-    username,
-    setUsername,
-    currentPage,
-    nextPage,
-    prevPage,
-    githubUser,
-  } = useGithubApi("facebook");
+  const { githubUser, repositories, starredRepos, currentPage } =
+    useRepoStore();
 
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">(
     "repositories",
   );
 
-  useEffect(() => {
-    getRepositories();
-    getStarredRepositories();
-  }, [username, currentPage]);
-
-  const handleSearch = (newUsername: string) => {
-    setUsername(newUsername);
-    getRepositories();
-    getStarredRepositories();
-  };
-
   return (
-    <div className="flex flex-col min-[733px]:flex-row w-full px-0 ">
+    <div className="flex flex-col min-[733px]:flex-row w-full px-0">
       <div className="min-[733px]:w-[217px]">
         <UserProfile
           avatarUrl={githubUser?.avatar_url || ""}
@@ -55,33 +32,30 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex-1 flex flex-col ">
+      <div className="flex-1 flex flex-col">
         <Tabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           repoCount={repositories.length}
-          starredCount={starredRepositories.length}
+          starredCount={starredRepos.length}
         />
-        <SearchBar onSearch={handleSearch} />
-
-        {loading && <p className="text-center text-gray-500">Carregando...</p>}
-        {error && <p className="text-center text-red-500">{error.message}</p>}
+        <SearchBar />
 
         {activeTab === "repositories" ? (
           <RepoList
-            starred={true}
+            starred={false}
             repositories={repositories}
             currentPage={currentPage}
-            nextPage={nextPage}
-            prevPage={prevPage}
+            nextPage={() => {}}
+            prevPage={() => {}}
           />
         ) : (
           <RepoList
-            starred={false}
-            repositories={starredRepositories}
+            starred={true}
+            repositories={starredRepos}
             currentPage={currentPage}
-            nextPage={nextPage}
-            prevPage={prevPage}
+            nextPage={() => {}}
+            prevPage={() => {}}
           />
         )}
       </div>

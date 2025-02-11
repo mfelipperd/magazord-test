@@ -4,14 +4,13 @@ import MobileFilter from "./MobileFilter";
 import { useGithubApi } from "../services/githubApi";
 import { useSearchStore } from "../store/useSearchStore";
 import { useState } from "react";
+import { useRepoStore } from "../store/useRepoStore";
 
-interface SearchBarProps {
-  onSearch: (username: string) => void;
-}
-
-export default function SearchBar({ onSearch }: SearchBarProps) {
+export default function SearchBar() {
   const { languages, repoTypes } = useGithubApi("facebook");
-  const [focus, setFocus] = useState<boolean>();
+  const [focus, setFocus] = useState<boolean>(false);
+
+  const { repositories, setRepositories, resetRepositories } = useRepoStore();
 
   const {
     searchValue,
@@ -23,8 +22,28 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
   } = useSearchStore();
 
   const handleSearch = () => {
-    if (searchValue.trim()) {
-      onSearch(searchValue);
+    if (!searchValue.trim()) {
+      resetRepositories(); // 🔹 Restaura a lista original ao apagar a busca
+      return;
+    }
+
+    const filteredRepos = repositories.filter((repo) =>
+      Object.values(repo).some(
+        (value) =>
+          typeof value === "string" &&
+          value.toLowerCase().includes(searchValue.toLowerCase()),
+      ),
+    );
+
+    setRepositories(filteredRepos);
+  };
+
+  const onBlur = () => {
+    if (!searchValue.trim()) {
+      if (!searchValue) {
+        resetRepositories();
+      }
+      setFocus(false);
     }
   };
 
@@ -45,7 +64,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         />
       </div>
 
-      <div className="relative flex items-center border-b border-gray-300 py-2 px-3 bg-neutral-100 rounded-md w-full lg:max-w-[600px]">
+      <div className="relative flex items-center bg-white border-b border-gray-300 py-2 px-3   rounded-md w-full lg:max-w-[600px]">
         <BiSearch
           size={24}
           className="absolute right-3 text-blue-500 cursor-pointer"
@@ -71,7 +90,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
 
         <input
           onFocus={() => setFocus(true)}
-          onBlur={() => !searchValue && setFocus(false)}
+          onBlur={onBlur}
           type="text"
           placeholder="Search Here"
           className="w-full bg-transparent outline-none text-gray-700 px-10"

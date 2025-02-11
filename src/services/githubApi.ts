@@ -1,33 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useRepoStore } from "../store/useRepoStore"; // Zustand
 import { useSearchStore } from "../store/useSearchStore";
 import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
-const GITHUB_REPO_BASE_URL = import.meta.env.VITE_GITHUB_REPO_BASE_URL;
 
-console.log("teste:", import.meta.env.VITE_GITHUB_API_BASE_URL);
+export function useGithubApi(username: string) {
+  const {
+    setGithubUser,
+    setRepositories,
+    setStarredRepositories,
+    setLanguages,
+    setRepoTypes,
+    setCurrentPage,
+    currentPage,
+  } = useRepoStore();
 
-export function useGithubApi(initialUsername: string) {
-  const [username, setUsername] = useState(initialUsername);
-  const [manualFetchTrigger, setManualFetchTrigger] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
   const { selectedLanguages, selectedRepoTypes } = useSearchStore();
+  const itemsPerPage = 10;
 
+  // Buscar usuário do GitHub
   const { data: githubUser, error: userError } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}` : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  const {
-    data: repositories,
-    error: repoError,
-    isLoading: repoLoading,
-    mutate: refreshRepositories,
-  } = useSWR(
+  // Buscar repositórios do usuário
+  const { data: repositoriesData, error: repoError } = useSWR(
     username
       ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}${
           selectedLanguages.length > 0
@@ -43,12 +45,8 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  const {
-    data: starredRepositories,
-    error: starredError,
-    isLoading: starredLoading,
-    mutate: refreshStarred,
-  } = useSWR(
+  // Buscar repositórios favoritos do usuário
+  const { data: starredRepositoriesData, error: starredError } = useSWR(
     username
       ? `${GITHUB_API_BASE_URL}/${username}/starred?page=${currentPage}&per_page=${itemsPerPage}`
       : null,
@@ -56,11 +54,8 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  const {
-    data: languages,
-    error: languageError,
-    isLoading: languageLoading,
-  } = useSWR(
+  // Buscar linguagens utilizadas nos repositórios
+  const { data: languagesData } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
     async (url) => {
       const repos = await fetcher(url);
@@ -71,11 +66,8 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  const {
-    data: repoTypes,
-    error: typeError,
-    isLoading: typeLoading,
-  } = useSWR(
+  // Buscar tipos de repositórios
+  const { data: repoTypesData } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
     async (url) => {
       const repos = await fetcher(url);
@@ -99,56 +91,69 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
+  // Atualizar Zustand quando os dados forem carregados
   useEffect(() => {
-    if (manualFetchTrigger) {
-      console.log("🔄 Atualizando dados manualmente...");
-      refreshRepositories();
-      refreshStarred();
-      setManualFetchTrigger(false);
-    }
-  }, [manualFetchTrigger, currentPage]);
+    if (githubUser) setGithubUser(githubUser);
+    if (repositoriesData) setRepositories(repositoriesData);
+    if (starredRepositoriesData)
+      setStarredRepositories(starredRepositoriesData);
+    if (languagesData) setLanguages(languagesData as string[]);
+    if (repoTypesData) setRepoTypes(repoTypesData);
+  }, [
+    githubUser,
+    repositoriesData,
+    starredRepositoriesData,
+    languagesData,
+    repoTypesData,
+  ]);
 
-  const getRepositories = () => setManualFetchTrigger(true);
-  const getStarredRepositories = () => setManualFetchTrigger(true);
-  const nextPage = () => setCurrentPage((prev) => prev + 1);
-  const prevPage = () => setCurrentPage((prev) => Math.max(1, prev - 1));
+  // Funções para alterar estado global
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
 
   return {
     githubUser,
-    repositories: repositories || [],
-    starredRepositories: starredRepositories || [],
-    languages: languages || [],
-    repoTypes: repoTypes || [],
-    getRepositories,
-    getStarredRepositories,
-    loading: repoLoading || starredLoading || languageLoading || typeLoading,
-    error: userError || repoError || starredError || languageError || typeError,
-    username,
-    setUsername,
+    repositories: repositoriesData || [],
+    starredRepositories: starredRepositoriesData || [],
+    languages: languagesData || [],
+    repoTypes: repoTypesData || [],
+    loading: !repositoriesData || !starredRepositoriesData || !githubUser,
+    error: userError || repoError || starredError,
     currentPage,
     nextPage,
     prevPage,
   };
 }
 
-export function useRepositoryDetails(owner: string, repoName: string) {
-  const { data, error, isLoading } = useSWR(
-    owner && repoName ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}` : null,
-    fetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false },
-  );
+/**
+ * Hook para buscar detalhes de um repositório e suas issues.
+ */
+export function useRepositoryData(owner: string, repoName: string) {
+  const { setRepoDetails, setIssues, repoDetails, issues } = useRepoStore();
 
-  return { repoDetails: data, error, isLoading };
-}
-
-export function useRepositoryIssues(owner: string, repoName: string) {
-  const { data, error, isLoading } = useSWR(
+  const { data: repositoryData, error: repoError } = useSWR(
     owner && repoName
-      ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}/issues`
+      ? `${GITHUB_API_BASE_URL}/repos/${owner}/${repoName}`
       : null,
     fetcher,
-    { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  return { issues: data || [], error, isLoading };
+  const { data: issuesData, error: issuesError } = useSWR(
+    owner && repoName
+      ? `${GITHUB_API_BASE_URL}/repos/${owner}/${repoName}/issues`
+      : null,
+    fetcher,
+  );
+
+  useEffect(() => {
+    if (repositoryData) setRepoDetails(repositoryData);
+    if (issuesData) setIssues(issuesData);
+  }, [repositoryData, issuesData]);
+
+  return {
+    repoDetails,
+    issues,
+    error: repoError || issuesError,
+    loading: !repositoryData || !issuesData,
+  };
 }
