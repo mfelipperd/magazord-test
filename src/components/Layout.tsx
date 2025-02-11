@@ -1,20 +1,17 @@
 import { Outlet } from "react-router-dom";
 import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import { useGithubApi } from "../services/githubApi";
+import { useRepoStore } from "../store/useRepoStore";
 
 export default function Layout() {
-  const [username, setUsernamed] = useState("");
-  const { getRepositories, getStarredRepositories, setUsername } =
-    useGithubApi(username);
+  const { setGithubUser } = useRepoStore();
 
-  const handleSearch = (newUsername: string) => {
-    console.log(newUsername);
-    if (newUsername.trim()) {
-      setUsername(newUsername);
-      getRepositories();
-      getStarredRepositories();
-    }
+  const [searchInput, setSearchInput] = useState(""); // Estado local para controlar input
+
+  const handleSearch = () => {
+    if (!searchInput.trim()) return;
+
+    setGithubUser(searchInput); // 🔹 Atualiza username no Zustand
   };
 
   return (
@@ -30,17 +27,17 @@ export default function Layout() {
             <BiSearch
               size={20}
               className="absolute left-3 text-gray-400 cursor-pointer"
-              onClick={() => handleSearch(username)}
+              onClick={handleSearch}
             />
             <input
               type="text"
               placeholder="Search GitHub user..."
               className="w-full bg-transparent outline-none text-white pl-8 pr-2"
-              value={username}
-              onChange={(e) => setUsernamed(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  handleSearch(username);
+                  handleSearch();
                 }
               }}
             />
