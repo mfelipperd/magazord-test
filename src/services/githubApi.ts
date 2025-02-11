@@ -5,18 +5,18 @@ import {
   githubMockStarredRepositories,
   githubMockUser,
 } from "../mocks/githubMocks";
+import { useSearchStore } from "../store/useSearchStore";
 
 const GITHUB_API_BASE_URL = "https://api.github.com/users";
 
 const fetcher = async (url: string) => {
-  console.log(`🔄 Fetching data from: ${url}`);
   try {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
     return response.json();
-  } catch (error) {
+  } catch {
     console.warn("⚠️ API do GitHub caiu! Usando Mock.");
     if (url.includes("/starred")) return githubMockStarredRepositories;
     if (url.includes("/repos")) return githubMockRepositories;
@@ -29,6 +29,7 @@ export function useGithubApi(initialUsername: string) {
   const [manualFetchTrigger, setManualFetchTrigger] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const { selectedLanguages, selectedRepoTypes } = useSearchStore();
 
   // 🔥 Dados do usuário
   const { data: githubUser, error: userError } = useSWR(
@@ -45,7 +46,15 @@ export function useGithubApi(initialUsername: string) {
     mutate: refreshRepositories,
   } = useSWR(
     username
-      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
+      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}${
+          selectedLanguages.length > 0
+            ? `&language=${selectedLanguages.join(",")}`
+            : ""
+        }${
+          selectedRepoTypes.length > 0
+            ? `&type=${selectedRepoTypes.join(",")}`
+            : ""
+        }`
       : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },

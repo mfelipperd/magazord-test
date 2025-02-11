@@ -17,7 +17,6 @@ export default function MobileFilter({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Fecha o modal ao clicar fora
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -31,7 +30,6 @@ export default function MobileFilter({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Alternar seleção de opções
   const toggleOption = (option: string) => {
     if (selectedOptions.includes(option)) {
       setSelectedOptions(selectedOptions.filter((item) => item !== option));
@@ -42,7 +40,6 @@ export default function MobileFilter({
 
   return (
     <>
-      {/* 🔥 Botão Principal */}
       <button
         onClick={() => setIsOpen(true)}
         className="w-full bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center justify-between md:hidden"
@@ -54,8 +51,6 @@ export default function MobileFilter({
         </span>
         <BiChevronDown />
       </button>
-
-      {/* 🔥 Modal Mobile com Animação */}
       <div
         className={`fixed inset-0  bg-opacity-50 flex justify-center items-end md:hidden z-50 transition-all duration-700 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
@@ -68,9 +63,7 @@ export default function MobileFilter({
           }`}
         >
           <div className="bg-gray-400 h-2 rounded-full mx-44 mb-8"></div>
-          {/* 🔥 Botão Fechar */}
           <div className="w-full flex justify-between items-center ">
-            {/* 🔥 Título */}
             <h2 className="text-2xl font-semibold">{placeholder}</h2>
             <button
               onClick={() => setIsOpen(false)}
@@ -80,7 +73,6 @@ export default function MobileFilter({
             </button>
           </div>
 
-          {/* 🔥 Lista de Opções */}
           <div className=" mt-4 max-h-[60vh] overflow-y-auto">
             {options.map((option) => (
               <div

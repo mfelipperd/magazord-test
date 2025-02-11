@@ -20,8 +20,6 @@ export default function Home() {
     nextPage,
     prevPage,
     githubUser,
-    languages,
-    repoTypes,
   } = useGithubApi("facebook");
 
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">(
@@ -71,11 +69,7 @@ export default function Home() {
             repoCount={repositories.length}
             starredCount={starredRepositories.length}
           />
-          <SearchBar
-            languages={languages || []}
-            types={repoTypes || []}
-            onSearch={handleSearch}
-          />
+          <SearchBar onSearch={handleSearch} />
 
           {loading && (
             <p className="text-center text-gray-500">Carregando...</p>

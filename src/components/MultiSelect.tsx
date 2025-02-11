@@ -59,7 +59,7 @@ export default function MultiSelect({
 
       {/* Opções Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-300 shadow-lg rounded-lg p-2 max-h-60 overflow-auto z-50">
+        <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-300 shadow-lg rounded-lg p-2 max-h-60 overflow-auto z-50 min-w-fit">
           {options.map((option) => (
             <div
               key={option}

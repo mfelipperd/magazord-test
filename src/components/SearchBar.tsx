@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import MultiSelect from "./MultiSelect";
 import MobileFilter from "./MobileFilter";
 import { useGithubApi } from "../services/githubApi";
+import { useSearchStore } from "../store/useSearchStore"; // 🆕 Importamos o Zustand
 
 interface SearchBarProps {
   onSearch: (username: string) => void;
@@ -10,10 +10,16 @@ interface SearchBarProps {
 
 export default function SearchBar({ onSearch }: SearchBarProps) {
   const { languages, repoTypes } = useGithubApi("facebook");
-  const [searchValue, setSearchValue] = useState("");
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
-  const [selectedRepoTypes, setSelectedRepoTypes] = useState<string[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+
+  // 🆕 Agora usamos Zustand para armazenar os filtros globalmente
+  const {
+    searchValue,
+    selectedLanguages,
+    selectedRepoTypes,
+    setSearchValue,
+    setSelectedLanguages,
+    setSelectedRepoTypes,
+  } = useSearchStore();
 
   return (
     <div className="flex flex-col gap-3 w-full md:flex-col lg:flex-row lg:items-center lg:justify-between">
@@ -26,7 +32,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           placeholder="Type"
         />
         <MultiSelect
-          options={languages}
+          options={languages as string[]}
           selectedOptions={selectedLanguages}
           setSelectedOptions={setSelectedLanguages}
           placeholder="Language"
@@ -37,18 +43,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
       <div className="relative flex items-center border-b border-gray-300 py-2 px-3 bg-neutral-100 rounded-md w-full lg:max-w-[600px]">
         <BiSearch
           size={24}
-          className={`absolute transition-all duration-300 ${
-            isSearching ? "left-3 text-gray-500" : "right-3 text-blue-500"
-          }`}
-          onClick={() => setIsSearching(true)}
+          className="absolute right-3 text-blue-500"
+          onClick={() => onSearch(searchValue)}
         />
 
         {/* 🔥 Mobile: Renderiza MobileFilter em vez de MultiSelect */}
-        <div
-          className={`absolute left-10 flex gap-2 transition-all duration-300 md:hidden ${
-            isSearching ? "opacity-0 scale-90" : "opacity-100 scale-100"
-          }`}
-        >
+        <div className="absolute left-10 flex gap-2 md:hidden">
           <MobileFilter
             options={repoTypes}
             selectedOptions={selectedRepoTypes}
@@ -56,7 +56,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
             placeholder="Type"
           />
           <MobileFilter
-            options={languages}
+            options={languages as string[]}
             selectedOptions={selectedLanguages}
             setSelectedOptions={setSelectedLanguages}
             placeholder="Language"
@@ -66,16 +66,12 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
         {/* 🔥 Input */}
         <input
           type="text"
-          placeholder={isSearching ? "" : "Search Here"}
+          placeholder="Search Here"
           className="w-full bg-transparent outline-none text-gray-700 px-10"
           value={searchValue}
           onChange={(e) => {
             setSearchValue(e.target.value);
             onSearch(e.target.value);
-          }}
-          onFocus={() => setIsSearching(true)}
-          onBlur={() => {
-            if (searchValue.trim() === "") setIsSearching(false);
           }}
         />
       </div>
@@ -89,7 +85,7 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
           placeholder="Type"
         />
         <MultiSelect
-          options={languages}
+          options={languages as string[]}
           selectedOptions={selectedLanguages}
           setSelectedOptions={setSelectedLanguages}
           placeholder="Language"
