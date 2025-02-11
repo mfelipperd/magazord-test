@@ -1,28 +1,9 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-import {
-  githubMockRepositories,
-  githubMockStarredRepositories,
-  githubMockUser,
-} from "../mocks/githubMocks";
 import { useSearchStore } from "../store/useSearchStore";
+import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = "https://api.github.com/users";
-
-const fetcher = async (url: string) => {
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Erro ${response.status}: ${response.statusText}`);
-    }
-    return response.json();
-  } catch {
-    console.warn("⚠️ API do GitHub caiu! Usando Mock.");
-    if (url.includes("/starred")) return githubMockStarredRepositories;
-    if (url.includes("/repos")) return githubMockRepositories;
-    return githubMockUser;
-  }
-};
 
 export function useGithubApi(initialUsername: string) {
   const [username, setUsername] = useState(initialUsername);
@@ -31,14 +12,12 @@ export function useGithubApi(initialUsername: string) {
   const itemsPerPage = 10;
   const { selectedLanguages, selectedRepoTypes } = useSearchStore();
 
-  // 🔥 Dados do usuário
   const { data: githubUser, error: userError } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/${username}` : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // 🔥 Repositórios
   const {
     data: repositories,
     error: repoError,
@@ -60,7 +39,6 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // 🔥 Starred Repositories
   const {
     data: starredRepositories,
     error: starredError,
@@ -74,7 +52,6 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // 🔥 Busca de Linguagens disponíveis (usado nos filtros)
   const {
     data: languages,
     error: languageError,
@@ -90,7 +67,6 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // 🔥 Busca de Tipos de Repositórios (exemplo: Forks, Mirrors, Arquivados)
   const {
     data: repoTypes,
     error: typeError,
@@ -119,7 +95,6 @@ export function useGithubApi(initialUsername: string) {
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
-  // 🔄 Atualiza ao mudar username ou página
   useEffect(() => {
     if (manualFetchTrigger) {
       console.log("🔄 Atualizando dados manualmente...");
