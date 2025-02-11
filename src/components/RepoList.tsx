@@ -42,10 +42,7 @@ export default function RepoList({
           Anterior
         </button>
         <span className="text-gray-700">Página {currentPage}</span>
-        <button
-          onClick={nextPage}
-          className="px-4 py-2 bg-blueCustom-500 text-white rounded"
-        >
+        <button onClick={nextPage} className="px-4 py-2 bg-gray-300  rounded">
           Próxima
         </button>
       </div>
