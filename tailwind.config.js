@@ -15,6 +15,12 @@ export default {
         lg: "1024px",
         xl: "1280px",
       },
+      safelist: [
+        { pattern: /bg-grayCustom-(100|200|300)/ },
+        { pattern: /text-grayCustom-(100|200|300)/ },
+        { pattern: /bg-blueCustom-(100|500)/ },
+        { pattern: /text-blueCustom-(100|500)/ },
+      ],
       colors: {
         grayCustom: {
           DEFAULT: "#DBDBDB", // Cinza médio

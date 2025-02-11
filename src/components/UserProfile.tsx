@@ -35,7 +35,7 @@ export default function UserProfile({
       <div className="block min-[733px]:hidden">
         <button
           onClick={() => setShowMore(!showMore)}
-          className="text-blue-500 mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out"
+          className="text-sky-500 mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out"
         >
           Informações Adicionais{" "}
           {showMore ? <FaChevronUp /> : <FaChevronDown />}
@@ -56,7 +56,7 @@ export default function UserProfile({
 
       <div className="hidden min-[733px]:block mt-3">
         {extraInfo?.map((info, index) => (
-          <p key={index} className="text-sm text-blue-600">
+          <p key={index} className="text-sm text-sky-600">
             {info}
           </p>
         ))}
