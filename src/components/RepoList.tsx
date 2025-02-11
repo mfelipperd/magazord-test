@@ -6,6 +6,7 @@ interface RepoListProps {
   currentPage: number;
   nextPage: () => void;
   prevPage: () => void;
+  starred: boolean;
 }
 
 export default function RepoList({
@@ -13,6 +14,7 @@ export default function RepoList({
   currentPage,
   nextPage,
   prevPage,
+  starred,
 }: RepoListProps) {
   return (
     <div>
@@ -21,7 +23,9 @@ export default function RepoList({
           Nenhum repositório encontrado.
         </p>
       ) : (
-        repositories.map((repo) => <RepoCard key={repo.id} repo={repo} />)
+        repositories.map((repo) => (
+          <RepoCard starred={starred} key={repo.id} repo={repo} />
+        ))
       )}
 
       {/* Paginação */}

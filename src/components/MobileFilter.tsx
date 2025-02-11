@@ -58,7 +58,7 @@ export default function MobileFilter({
       >
         <div
           ref={dropdownRef}
-          className={`fixed -bottom-[30rem] -left-14 bg-white w-[32rem] max-h-[80vh] h-0 rounded-t-lg p-4  overflow-hidden transition-all duration-700 ${
+          className={`fixed -bottom-[30rem] ] bg-white w-[100%] max-h-[80vh] h-0 rounded-t-lg p-4  overflow-hidden transition-all duration-700 ${
             isOpen ? "h-[80vh]" : "h-0"
           }`}
         >

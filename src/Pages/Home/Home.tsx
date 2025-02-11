@@ -39,9 +39,7 @@ export default function Home() {
 
   return (
     <Layout>
-      {/* 🔥 Layout 100% sem margens laterais */}
       <div className="flex flex-col min-[733px]:flex-row w-full px-0">
-        {/* 🔥 Coluna do UserProfile */}
         <div className="min-[733px]:w-[217px]">
           <UserProfile
             avatarUrl={githubUser?.avatar_url || ""}
@@ -61,7 +59,6 @@ export default function Home() {
           />
         </div>
 
-        {/* 🔥 Coluna do Conteúdo (Tabs, Search e Lista) */}
         <div className="flex-1 flex flex-col ">
           <Tabs
             activeTab={activeTab}
@@ -78,6 +75,7 @@ export default function Home() {
 
           {activeTab === "repositories" ? (
             <RepoList
+              starred={true}
               repositories={repositories}
               currentPage={currentPage}
               nextPage={nextPage}
@@ -85,6 +83,7 @@ export default function Home() {
             />
           ) : (
             <RepoList
+              starred={false}
               repositories={starredRepositories}
               currentPage={currentPage}
               nextPage={nextPage}
