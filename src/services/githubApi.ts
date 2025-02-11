@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { useSearchStore } from "../store/useSearchStore";
 import { fetcher } from "../utils/fetcher";
 
-const GITHUB_API_BASE_URL = "https://api.github.com/users";
-const GITHUB_REPO_BASE_URL = "https://api.github.com/repos";
+const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
+const GITHUB_REPO_BASE_URL = import.meta.env.VITE_GITHUB_REPO_BASE_URL;
+
+console.log("teste:", import.meta.env.VITE_GITHUB_API_BASE_URL);
 
 export function useGithubApi(initialUsername: string) {
   const [username, setUsername] = useState(initialUsername);
@@ -129,7 +131,6 @@ export function useGithubApi(initialUsername: string) {
   };
 }
 
-// 🔹 Hook para buscar detalhes do repositório
 export function useRepositoryDetails(owner: string, repoName: string) {
   const { data, error, isLoading } = useSWR(
     owner && repoName ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}` : null,
@@ -140,7 +141,6 @@ export function useRepositoryDetails(owner: string, repoName: string) {
   return { repoDetails: data, error, isLoading };
 }
 
-// 🔹 Hook para buscar issues do repositório
 export function useRepositoryIssues(owner: string, repoName: string) {
   const { data, error, isLoading } = useSWR(
     owner && repoName
@@ -153,7 +153,6 @@ export function useRepositoryIssues(owner: string, repoName: string) {
   return { issues: data || [], error, isLoading };
 }
 
-// 🔹 Hook para buscar comentários de uma issue específica
 export function useIssueComments(
   owner: string,
   repoName: string,

@@ -30,7 +30,7 @@ export default function RepositoryDetails() {
     );
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen">
       <div className="flex justify-between items-center max-w-3xl mx-auto">
         <button
           onClick={() => navigate(-1)}

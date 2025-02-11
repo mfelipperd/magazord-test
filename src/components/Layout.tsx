@@ -1,8 +1,6 @@
-interface LayoutProps {
-  children: React.ReactNode;
-}
+import { Outlet } from "react-router-dom";
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100">
       <header className="w-full bg-gray-900 flex flex-col items-center">
@@ -14,7 +12,9 @@ export default function Layout({ children }: LayoutProps) {
         </div>
       </header>
 
-      <main className="w-full max-w-[1200px] px-4 py-6">{children}</main>
+      <main className="w-full max-w-[1200px] px-4 py-6 bg-white">
+        <Outlet />
+      </main>
     </div>
   );
 }
