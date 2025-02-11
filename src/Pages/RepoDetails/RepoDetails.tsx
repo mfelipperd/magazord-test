@@ -34,7 +34,7 @@ export default function RepositoryDetails() {
       <div className="flex justify-between items-center max-w-3xl mx-auto">
         <button
           onClick={() => navigate(-1)}
-          className="text-gray-600 hover:text-black flex items-center gap-2"
+          className="text-gray-600 hover:text-black flex items-center gap-2 cursor-pointer"
         >
           <FaArrowLeft />
           <span>Voltar</span>
@@ -60,11 +60,11 @@ export default function RepositoryDetails() {
         <div className="flex justify-between mt-4 text-gray-700 text-lg font-semibold">
           <div className="flex flex-col items-center">
             <FaStar className="text-yellow-500" />
-            <span>{repoDetails.stargazers_count.toLocaleString()} Stars</span>
+            <span>{repoDetails.stargazers_count?.toLocaleString()} Stars</span>
           </div>
           <div className="flex flex-col items-center">
             <FaCodeBranch className="text-gray-500" />
-            <span>{repoDetails.forks_count.toLocaleString()} Forks</span>
+            <span>{repoDetails.forks_count?.toLocaleString()} Forks</span>
           </div>
           <div className="flex flex-col items-center">
             <FaExclamationCircle className="text-red-500" />
@@ -86,7 +86,7 @@ export default function RepositoryDetails() {
               <h2 className="text-md font-semibold text-gray-800">
                 {issue.title}
               </h2>
-              <p className="text-gray-500 text-sm mt-1">{issue.user.login}</p>
+              <p className="text-gray-500 text-sm mt-1">{issue.user?.login}</p>
             </div>
           ))
         )}
