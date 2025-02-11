@@ -28,7 +28,6 @@ export default function RepoList({
         ))
       )}
 
-      {/* Paginação */}
       <div className="flex justify-between items-center mt-4">
         <button
           onClick={prevPage}

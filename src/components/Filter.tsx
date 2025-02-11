@@ -22,7 +22,6 @@ export default function Filters({
     null,
   );
 
-  // Função para alternar seleção
   const toggleSelection = (
     value: string,
     selected: string[],
@@ -37,7 +36,6 @@ export default function Filters({
 
   return (
     <>
-      {/* Desktop & Tablet: Selects normais */}
       <div className="hidden md:flex gap-3">
         <select
           className="bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full cursor-pointer"
@@ -73,7 +71,6 @@ export default function Filters({
         </select>
       </div>
 
-      {/* Mobile: Botões que abrem o modal */}
       <div className="md:hidden flex gap-3">
         <button
           className="bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center gap-2"
@@ -89,7 +86,6 @@ export default function Filters({
         </button>
       </div>
 
-      {/* Mobile: Modal de Filtros */}
       {activeFilter && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-end z-50">
           <div className="bg-white w-full max-h-[80%] rounded-t-2xl p-6 shadow-lg overflow-y-auto animate-slide-up">
