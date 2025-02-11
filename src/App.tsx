@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Starred from "./Pages/Starred/Starred";
-import RepoDetails from "./Pages/RepoDetails/RepoDetails";
 import Home from "./Pages/Home/Home";
+import RepositoryDetails from "./Pages/RepoDetails/RepoDetails";
 
 export default function App() {
   return (
@@ -9,7 +9,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/starred" element={<Starred />} />
-        <Route path="/repo/:repoName" element={<RepoDetails />} />
+        <Route
+          path="/repository/:owner/:repoName"
+          element={<RepositoryDetails />}
+        />
       </Routes>
     </Router>
   );

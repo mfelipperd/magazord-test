@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr";
 import { useState, useEffect } from "react";
 import { useSearchStore } from "../store/useSearchStore";
 import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = "https://api.github.com/users";
+const GITHUB_REPO_BASE_URL = "https://api.github.com/repos";
 
 export function useGithubApi(initialUsername: string) {
   const [username, setUsername] = useState(initialUsername);
@@ -125,4 +127,45 @@ export function useGithubApi(initialUsername: string) {
     nextPage,
     prevPage,
   };
+}
+
+// 🔹 Hook para buscar detalhes do repositório
+export function useRepositoryDetails(owner: string, repoName: string) {
+  const { data, error, isLoading } = useSWR(
+    owner && repoName ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}` : null,
+    fetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
+  return { repoDetails: data, error, isLoading };
+}
+
+// 🔹 Hook para buscar issues do repositório
+export function useRepositoryIssues(owner: string, repoName: string) {
+  const { data, error, isLoading } = useSWR(
+    owner && repoName
+      ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}/issues`
+      : null,
+    fetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
+  return { issues: data || [], error, isLoading };
+}
+
+// 🔹 Hook para buscar comentários de uma issue específica
+export function useIssueComments(
+  owner: string,
+  repoName: string,
+  issueNumber: number,
+) {
+  const { data, error, isLoading } = useSWR(
+    owner && repoName && issueNumber
+      ? `${GITHUB_REPO_BASE_URL}/${owner}/${repoName}/issues/${issueNumber}/comments`
+      : null,
+    fetcher,
+    { revalidateOnFocus: false, shouldRetryOnError: false },
+  );
+
+  return { comments: data || [], error, isLoading };
 }

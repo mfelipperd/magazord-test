@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { FaCodeBranch, FaStar } from "react-icons/fa";
 import { Repo } from "../interfaces/IRepository";
 
@@ -7,8 +8,17 @@ interface RepoCardProps {
 }
 
 export default function RepoCard({ repo, starred }: RepoCardProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/repository/${repo.owner.login}/${repo.name}`);
+  };
+
   return (
-    <div className="p-4 border-b border-gray-200">
+    <div
+      className="p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+      onClick={handleClick}
+    >
       <h2 className="text-lg font-medium text-gray-900">
         {repo.language ? `${repo.language} / ` : ""}
         <a
@@ -16,6 +26,7 @@ export default function RepoCard({ repo, starred }: RepoCardProps) {
           target="_blank"
           rel="noopener noreferrer"
           className="text-sky-500 font-semibold hover:underline"
+          onClick={(e) => e.stopPropagation()}
         >
           {repo.name}
         </a>
