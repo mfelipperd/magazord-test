@@ -2,7 +2,7 @@ import { useState } from "react";
 import UserProfile from "../../components/UserProfile";
 import Tabs from "../../components/Tabs";
 import RepoList from "../../components/RepoList";
-import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import { useRepoStore } from "../../store/useRepoStore";
 
 export default function Home() {
