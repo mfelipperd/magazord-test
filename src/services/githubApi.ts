@@ -21,7 +21,7 @@ export function useGithubApi() {
     userNameStore: username,
   } = useRepoStore();
 
-  const itemsPerPage = 10;
+  const itemsPerPage = undefined;
 
   const { data: githubUser, error: userError } = useSWR(
     username ? `${GITHUB_API_BASE_URL}/users/${username}` : null,

@@ -5,6 +5,9 @@ export interface Repo {
   description: string;
   stargazers_count: number;
   forks_count: number;
+  fork: boolean;
+  archived: boolean;
+  mirror_url: string | null;
   language: string;
   html_url: string;
   owner: {
