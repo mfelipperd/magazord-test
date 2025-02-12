@@ -6,13 +6,8 @@ import SearchBar from "../../components/SearchBar";
 import { useRepoStore } from "../../store/useRepoStore";
 
 export default function Home() {
-  const {
-    githubUser,
-    repositories,
-    starredRepos,
-    currentPage,
-    totalRepositories,
-  } = useRepoStore();
+  const { githubUser, repositories, starredRepos, totalRepositories } =
+    useRepoStore();
 
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">(
     "repositories",
@@ -47,21 +42,9 @@ export default function Home() {
         <SearchBar />
 
         {activeTab === "repositories" ? (
-          <RepoList
-            starred={false}
-            repositories={repositories}
-            currentPage={currentPage}
-            nextPage={() => {}}
-            prevPage={() => {}}
-          />
+          <RepoList starred={false} repositories={repositories} />
         ) : (
-          <RepoList
-            starred={true}
-            repositories={starredRepos}
-            currentPage={currentPage}
-            nextPage={() => {}}
-            prevPage={() => {}}
-          />
+          <RepoList starred={true} repositories={starredRepos} />
         )}
       </div>
     </div>

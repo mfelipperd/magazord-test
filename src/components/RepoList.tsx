@@ -1,22 +1,24 @@
 import { Repo } from "../interfaces/IRepository";
+import { useRepoStore } from "../store/useRepoStore";
 import RepoCard from "./RepoCard";
 
 interface RepoListProps {
   repositories: Repo[];
-  currentPage: number;
-  nextPage: () => void;
-  prevPage: () => void;
   starred: boolean;
 }
 
-export default function RepoList({
-  repositories,
-  currentPage,
-  nextPage,
-  prevPage,
-  starred,
-}: RepoListProps) {
-  console.log(repositories);
+export default function RepoList({ repositories, starred }: RepoListProps) {
+  const { currentPage, setCurrentPage } = useRepoStore();
+
+  const prevPage = () => {
+    if (currentPage >= 2) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+  };
+
   return (
     <div>
       {!repositories ||

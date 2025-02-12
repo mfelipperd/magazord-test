@@ -5,6 +5,7 @@ import { useRepoStore } from "../store/useRepoStore";
 import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
+const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 export function useGithubApi() {
   const {
@@ -32,7 +33,11 @@ export function useGithubApi() {
       ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
       : null,
     async (url) => {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${GITHUB_TOKEN}`,
+        },
+      });
       const repos = await response.json();
 
       if (response.headers.has("X-Total-Count")) {

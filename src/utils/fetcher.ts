@@ -5,8 +5,14 @@ import {
 } from "../mocks/githubMocks";
 
 export const fetcher = async (url: string) => {
+  const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
+
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${GITHUB_TOKEN}`,
+      },
+    });
     if (!response.ok) {
       throw new Error(`Erro ${response.status}: ${response.statusText}`);
     }
