@@ -2,7 +2,6 @@
 import useSWR from "swr";
 import { useEffect } from "react";
 import { useRepoStore } from "../store/useRepoStore";
-import { useSearchStore } from "../store/useSearchStore";
 import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
@@ -16,9 +15,9 @@ export function useGithubApi(username: string) {
     setRepoTypes,
     setCurrentPage,
     currentPage,
+    setTotalRepositories,
   } = useRepoStore();
 
-  const { selectedLanguages, selectedRepoTypes } = useSearchStore();
   const itemsPerPage = 10;
 
   const { data: githubUser, error: userError } = useSWR(
@@ -29,17 +28,21 @@ export function useGithubApi(username: string) {
 
   const { data: repositoriesData, error: repoError } = useSWR(
     username
-      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}${
-          selectedLanguages.length > 0
-            ? `&language=${selectedLanguages.join(",")}`
-            : ""
-        }${
-          selectedRepoTypes.length > 0
-            ? `&type=${selectedRepoTypes.join(",")}`
-            : ""
-        }`
+      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
       : null,
-    fetcher,
+    async (url) => {
+      const response = await fetch(url);
+      const repos = await response.json();
+
+      // Captura o total de repositórios do primeiro request
+      if (response.headers.has("X-Total-Count")) {
+        setTotalRepositories(Number(response.headers.get("X-Total-Count")));
+      } else {
+        setTotalRepositories(repos.length); // Fallback, caso a API não forneça o header
+      }
+
+      return repos;
+    },
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 

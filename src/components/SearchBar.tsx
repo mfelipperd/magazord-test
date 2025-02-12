@@ -64,7 +64,7 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className="relative flex items-center bg-white border-b border-gray-300 py-2 px-3   rounded-md w-full lg:max-w-[600px]">
+      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-gray-300 py-5 px-3 pl-0  rounded-md w-full lg:max-w-[600px]">
         <BiSearch
           size={24}
           className="absolute right-3 text-blue-500 cursor-pointer"
@@ -72,7 +72,7 @@ export default function SearchBar() {
         />
 
         <div
-          className={`transition-all duration-500 ease-in-out absolute ${focus ? "opacity-0 z-0" : "opacity-100"} bg-neutral-100 left-10 flex gap-2 md:hidden`}
+          className={`transition-all duration-500 ease-in-out absolute ${focus ? "opacity-0 z-0" : "opacity-100"} bg-neutral-100 left-3 flex gap-2 md:hidden `}
         >
           <MobileFilter
             options={repoTypes}

@@ -16,9 +16,12 @@ export default function RepoList({
   prevPage,
   starred,
 }: RepoListProps) {
+  console.log(repositories);
   return (
     <div>
-      {repositories.length === 0 ? (
+      {!repositories ||
+      repositories.length === 0 ||
+      !Array.isArray(repositories) ? (
         <p className="text-center text-gray-500">
           Nenhum repositório encontrado.
         </p>

@@ -23,9 +23,13 @@ interface RepoStore {
   setIssues: (issues: IIssue[]) => void;
   addStarredRepo: (repo: Repo) => void;
   removeStarredRepo: (repoId: number) => void;
+  totalRepositories: number;
+  setTotalRepositories: (total: number) => void;
 }
 
 export const useRepoStore = create<RepoStore>((set) => ({
+  totalRepositories: 0, // <-- Inicializa como 0
+  setTotalRepositories: (total) => set({ totalRepositories: total }), //
   githubUser: null,
   originalRepositories: [],
   repositories: [],
