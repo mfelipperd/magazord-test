@@ -40,8 +40,8 @@ export default function RepoList({ repositories, starred }: RepoListProps) {
           disabled={currentPage === 1}
           className={`px-4 py-2 rounded ${
             currentPage === 1
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blueCustom-500 text-white"
+              ? "bg-white cursor-not-allowed hidden"
+              : "bg-gray-300 "
           }`}
         >
           Anterior
