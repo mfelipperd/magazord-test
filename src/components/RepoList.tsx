@@ -18,6 +18,7 @@ export default function RepoList({ repositories, starred }: RepoListProps) {
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
+  console.log(repositories[0]);
 
   return (
     <div>

@@ -5,6 +5,7 @@ import { useRepoStore } from "../store/useRepoStore";
 import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
+
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 export function useGithubApi() {
@@ -23,14 +24,14 @@ export function useGithubApi() {
   const itemsPerPage = 10;
 
   const { data: githubUser, error: userError } = useSWR(
-    username ? `${GITHUB_API_BASE_URL}/${username}` : null,
+    username ? `${GITHUB_API_BASE_URL}/users/${username}` : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
   const { data: repositoriesData, error: repoError } = useSWR(
     username
-      ? `${GITHUB_API_BASE_URL}/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
+      ? `${GITHUB_API_BASE_URL}/users/${username}/repos?page=${currentPage}&per_page=${itemsPerPage}`
       : null,
     async (url) => {
       const response = await fetch(url, {
@@ -53,14 +54,16 @@ export function useGithubApi() {
 
   const { data: starredRepositoriesData, error: starredError } = useSWR(
     username
-      ? `${GITHUB_API_BASE_URL}/${username}/starred?page=${currentPage}&per_page=${itemsPerPage}`
+      ? `${GITHUB_API_BASE_URL}/users/${username}/starred?page=${currentPage}&per_page=${itemsPerPage}`
       : null,
     fetcher,
     { revalidateOnFocus: false, shouldRetryOnError: false },
   );
 
   const { data: languagesData } = useSWR(
-    username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
+    username
+      ? `${GITHUB_API_BASE_URL}/users/${username}/repos?per_page=100`
+      : null,
     async (url) => {
       const repos = await fetcher(url);
       return Array.from(
@@ -71,7 +74,9 @@ export function useGithubApi() {
   );
 
   const { data: repoTypesData } = useSWR(
-    username ? `${GITHUB_API_BASE_URL}/${username}/repos?per_page=100` : null,
+    username
+      ? `${GITHUB_API_BASE_URL}/users/${username}/repos?per_page=100`
+      : null,
     async (url) => {
       const repos = await fetcher(url);
       return ["All", "Sources", "Forks", "Archived", "Mirrors"].filter((type) =>
