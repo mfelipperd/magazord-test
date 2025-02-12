@@ -1,6 +1,6 @@
 import { BiSearch } from "react-icons/bi";
-import MultiSelect from "../MultiSelect";
-import MobileFilter from "../MobileFilter";
+import MultiSelect from "./components/MultiSelect";
+import MobileFilter from "./components/MobileFilter";
 import { useGithubApi } from "../../services/githubApi";
 import { useSerachBarController } from "./searchBar.controller";
 
