@@ -22,9 +22,8 @@ export default function SearchBar() {
   const { originalRepositories, setRepositories, resetRepositories } =
     useRepoStore();
 
-  // 🔥 Agora só atualiza os resultados quando os filtros de linguagem ou tipo mudam
   useEffect(() => {
-    handleSearch(false); // ⚡ A busca automática NÃO considera a palavra-chave
+    handleSearch(false);
   }, [selectedLanguages, selectedRepoTypes]);
 
   const handleSearch = (includeSearchValue: boolean) => {
@@ -40,7 +39,6 @@ export default function SearchBar() {
     }
 
     const filteredRepos = originalRepositories.filter((repo) => {
-      // 🔍 Palavra-chave só é considerada quando "includeSearchValue" for true
       const matchesSearch =
         !includeSearchValue ||
         trimmedSearch === "" ||
@@ -50,12 +48,10 @@ export default function SearchBar() {
             value.toLowerCase().includes(trimmedSearch),
         );
 
-      // 🌍 Filtro por linguagem (sempre ativo)
       const matchesLanguage =
         selectedLanguages.length === 0 ||
         selectedLanguages.includes(repo.language);
 
-      // 🏷 Filtro por tipo de repositório (sempre ativo)
       const matchesRepoType =
         selectedRepoTypes.length === 0 ||
         selectedRepoTypes.some((type) => {
@@ -94,7 +90,6 @@ export default function SearchBar() {
 
   return (
     <div className="flex flex-col gap-3 w-full md:flex-col lg:flex-row lg:items-center lg:justify-between">
-      {/* Filtros para desktop */}
       <div className="hidden md:flex gap-3 lg:hidden w-full max-w-56">
         <MultiSelect
           options={repoTypes}
@@ -110,15 +105,13 @@ export default function SearchBar() {
         />
       </div>
 
-      {/* Barra de pesquisa */}
       <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-gray-300 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:max-w-[600px]">
         <BiSearch
           size={24}
           className="absolute right-3 text-blue-500 cursor-pointer"
-          onClick={() => handleSearch(true)} // 🔍 Agora a busca manual inclui a palavra-chave
+          onClick={() => handleSearch(true)}
         />
 
-        {/* Filtros para mobile (somem quando o input tem foco) */}
         <div
           className={`transition-all duration-500 ease-in-out absolute ${
             focus ? "opacity-0 z-0" : "opacity-100"
@@ -148,13 +141,12 @@ export default function SearchBar() {
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleSearch(true); // 🔍 Agora só filtra a palavra-chave ao pressionar Enter
+              handleSearch(true);
             }
           }}
         />
       </div>
 
-      {/* Filtros para desktop */}
       <div className="hidden lg:flex gap-3">
         <MultiSelect
           options={repoTypes}

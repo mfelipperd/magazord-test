@@ -46,7 +46,7 @@ export default function MultiSelect({
       >
         <span className="truncate">
           {selectedOptions.length > 0
-            ? `${selectedOptions.length} selected` // 🔥 Agora mostra apenas o número de itens selecionados
+            ? `${selectedOptions.length} selected`
             : placeholder}
         </span>
         <BiChevronDown

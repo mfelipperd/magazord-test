@@ -6,12 +6,12 @@ import { useRepoStore } from "../store/useRepoStore";
 export default function Layout() {
   const { setUserNameStore } = useRepoStore();
 
-  const [searchInput, setSearchInput] = useState(""); // Estado local para controlar input
+  const [searchInput, setSearchInput] = useState("");
 
   const handleSearch = () => {
     if (!searchInput.trim()) return;
 
-    setUserNameStore(searchInput); // 🔹 Atualiza username no Zustand
+    setUserNameStore(searchInput);
   };
 
   const [isExpanded, setIsExpanded] = useState(false);
