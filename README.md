@@ -51,7 +51,7 @@ npm run dev
 yarn dev
 ```
 
-O projeto estará disponível em `http://localhost:5173`
+O projeto estará disponível em (https://magazord-test.vercel.app/)
 
 ---
 
