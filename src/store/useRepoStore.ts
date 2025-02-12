@@ -3,6 +3,8 @@ import { create } from "zustand";
 import { Repo, IIssue } from "../interfaces/IRepository";
 
 interface RepoStore {
+  userNameStore: string;
+  setUserNameStore: (name: string) => void;
   githubUser: any | null;
   originalRepositories: Repo[];
   repositories: Repo[];
@@ -28,8 +30,10 @@ interface RepoStore {
 }
 
 export const useRepoStore = create<RepoStore>((set) => ({
-  totalRepositories: 0, // <-- Inicializa como 0
-  setTotalRepositories: (total) => set({ totalRepositories: total }), //
+  userNameStore: "mfelipperd",
+  setUserNameStore: (name) => set({ userNameStore: name }),
+  totalRepositories: 0,
+  setTotalRepositories: (total) => set({ totalRepositories: total }),
   githubUser: null,
   originalRepositories: [],
   repositories: [],
@@ -69,5 +73,3 @@ export const useRepoStore = create<RepoStore>((set) => ({
       starredRepos: state.starredRepos.filter((repo) => repo.id !== repoId),
     })),
 }));
-
-console.log(useRepoStore);

@@ -7,7 +7,8 @@ import { useState } from "react";
 import { useRepoStore } from "../store/useRepoStore";
 
 export default function SearchBar() {
-  const { languages, repoTypes } = useGithubApi("facebook");
+  const { languages, repoTypes } = useGithubApi();
+
   const [focus, setFocus] = useState<boolean>(false);
 
   const { repositories, setRepositories, resetRepositories } = useRepoStore();
@@ -46,7 +47,6 @@ export default function SearchBar() {
       setFocus(false);
     }
   };
-
   return (
     <div className="flex flex-col gap-3 w-full md:flex-col lg:flex-row lg:items-center lg:justify-between">
       <div className="hidden md:flex gap-3 lg:hidden w-full max-w-56">
@@ -64,7 +64,7 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-gray-300 py-5 px-3 pl-0  rounded-md w-full lg:max-w-[600px]">
+      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-gray-300 py-5 md:py-2 px-3 pl-0  rounded-md w-full lg:max-w-[600px]">
         <BiSearch
           size={24}
           className="absolute right-3 text-blue-500 cursor-pointer"

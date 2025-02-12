@@ -4,14 +4,14 @@ import { BiSearch } from "react-icons/bi";
 import { useRepoStore } from "../store/useRepoStore";
 
 export default function Layout() {
-  const { setGithubUser } = useRepoStore();
+  const { setUserNameStore } = useRepoStore();
 
   const [searchInput, setSearchInput] = useState(""); // Estado local para controlar input
 
   const handleSearch = () => {
     if (!searchInput.trim()) return;
 
-    setGithubUser(searchInput); // 🔹 Atualiza username no Zustand
+    setUserNameStore(searchInput); // 🔹 Atualiza username no Zustand
   };
 
   const [isExpanded, setIsExpanded] = useState(false);

@@ -6,7 +6,7 @@ import { fetcher } from "../utils/fetcher";
 
 const GITHUB_API_BASE_URL = import.meta.env.VITE_GITHUB_API_BASE_URL;
 
-export function useGithubApi(username: string) {
+export function useGithubApi() {
   const {
     setGithubUser,
     setRepositories,
@@ -16,6 +16,7 @@ export function useGithubApi(username: string) {
     setCurrentPage,
     currentPage,
     setTotalRepositories,
+    userNameStore: username,
   } = useRepoStore();
 
   const itemsPerPage = 10;
@@ -34,11 +35,10 @@ export function useGithubApi(username: string) {
       const response = await fetch(url);
       const repos = await response.json();
 
-      // Captura o total de repositórios do primeiro request
       if (response.headers.has("X-Total-Count")) {
         setTotalRepositories(Number(response.headers.get("X-Total-Count")));
       } else {
-        setTotalRepositories(repos.length); // Fallback, caso a API não forneça o header
+        setTotalRepositories(repos.length);
       }
 
       return repos;
