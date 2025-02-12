@@ -125,10 +125,7 @@ refactor: refatora componente RepoCard
 
 ## 🔎 **Boas Práticas Utilizadas**
 
-✅ **SOLID** → Código modular e de fácil manutenção
-✅ **KISS (Keep It Simple, Stupid)** → Implementação clara e objetiva
 ✅ **YAGNI (You Aren’t Gonna Need It)** → Apenas funcionalidades essenciais
-✅ **DRY (Don't Repeat Yourself)** → Reutilização de código ao máximo
 ✅ **Acessibilidade** → Estruturas e estilos otimizados para UX/UI
 
 ---
