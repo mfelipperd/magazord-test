@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 
 interface UserProfileProps {
@@ -6,7 +6,10 @@ interface UserProfileProps {
   name: string;
   role: string;
   company: string;
-  extraInfo?: string[];
+  extraInfo?: {
+    infoName: string;
+    infoIcon: ReactNode;
+  }[];
 }
 
 export default function UserProfile({
@@ -19,7 +22,7 @@ export default function UserProfile({
   const [showMore, setShowMore] = useState(false);
 
   return (
-    <div className="flex flex-col items-center text-center  min-[733px]:items-start min-[733px]:text-left min-[733px]:w-full">
+    <div className="flex flex-col justify-center items-center text-center  min-[733px]:items-center min-[733px]:text-left min-[733px]:w-full">
       <img
         src={avatarUrl}
         alt="User Avatar"
@@ -28,9 +31,11 @@ export default function UserProfile({
         className=" w-[150px] h-[150px] rounded-full shadow-md "
       />
 
-      <h1 className="text-lg font-semibold mt-2 text-gray-900">{name}</h1>
-      <p className="text-sm text-gray-600">{role}</p>
-      <p className="text-sm text-gray-500">{company}</p>
+      <h1 className="text-lg font-semibold mt-2 text-custom-gray-900 ">
+        {name}{" "}
+      </h1>
+      <p className="text-sm text-custom-gray-300">{role}</p>
+      <p className="text-sm text-custom-gray-300">{company}</p>
 
       <div className=" w-full  min-[733px]:hidden">
         <div className="w-full flex justify-center items-center">
@@ -46,24 +51,41 @@ export default function UserProfile({
         </div>
 
         <div
-          className={`transition-all duration-500 ease-in-out overflow-hidden ${
+          className={`transition-all duration-500 ease-in-out flex flex-col  items-start ${
             showMore ? "max-h-40 opacity-100 p-3" : "max-h-0 opacity-0"
-          } bg-gray-100 rounded-md w-full mt-2`}
+          } bg-gray-100 rounded-md w-full `}
         >
           {extraInfo?.map((info, index) => (
-            <p key={index} className="text-sm text-custom-blue-100 text-start">
-              {info}
-            </p>
+            <div
+              key={index + info.infoName}
+              className="flex items-center gap-3 mt-4"
+            >
+              {info.infoIcon}
+              <p className="text-sm text-custom-blue-100  truncate max-w-40">
+                {info.infoName}
+              </p>
+            </div>
           ))}
         </div>
       </div>
 
       <div className="hidden min-[733px]:block mt-3">
-        {extraInfo?.map((info, index) => (
-          <p key={index} className="text-sm text-custom-blue-100">
-            {info}
-          </p>
-        ))}
+        {extraInfo?.map(
+          (info, index) =>
+            info.infoName && (
+              <div
+                key={index + info.infoName}
+                className="flex items-center gap-3 mt-3"
+              >
+                {info.infoIcon}
+                <p className="text-sm text-custom-blue-100  truncate max-w-40">
+                  {info.infoName.includes("http")
+                    ? info.infoName.split("//")[1]
+                    : info.infoName}
+                </p>
+              </div>
+            ),
+        )}
       </div>
     </div>
   );
