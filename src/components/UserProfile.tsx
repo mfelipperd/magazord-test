@@ -31,9 +31,11 @@ export default function UserProfile({
         className=" w-[150px] h-[150px] rounded-full shadow-md "
       />
 
-      <h1 className="text-lg font-semibold mt-2 text-gray-900 ">{name} </h1>
-      <p className="text-sm text-gray-600">{role}</p>
-      <p className="text-sm text-gray-500">{company}</p>
+      <h1 className="text-lg font-semibold mt-2 text-custom-gray-900 ">
+        {name}{" "}
+      </h1>
+      <p className="text-sm text-custom-gray-300">{role}</p>
+      <p className="text-sm text-custom-gray-300">{company}</p>
 
       <div className=" w-full  min-[733px]:hidden">
         <div className="w-full flex justify-center items-center">
