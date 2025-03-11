@@ -4,6 +4,9 @@ import Tabs from "../../components/Tabs";
 import RepoList from "../../components/RepoList";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import { useRepoStore } from "../../store/useRepoStore";
+import { CIcon } from "@coreui/icons-react";
+import { cilLocationPin } from "@coreui/icons";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function Home() {
   const { githubUser, repositories, starredRepos, totalRepositories } =
@@ -22,12 +25,37 @@ export default function Home() {
           role={githubUser?.bio || "Sem descrição disponível"}
           company={githubUser?.company || "Sem empresa cadastrada"}
           extraInfo={[
-            githubUser?.location ? `🌍 ${githubUser.location}` : "",
-            githubUser?.blog ? `🔗 ${githubUser.blog}` : "",
-            githubUser?.twitter_username
-              ? `🐦 Twitter: @${githubUser.twitter_username}`
-              : "",
-            githubUser?.html_url ? `💻 GitHub: ${githubUser.html_url}` : "",
+            {
+              infoName: githubUser?.company || "",
+              infoIcon: (
+                <Icon
+                  icon="carbon:enterprise"
+                  className="h-4 w-4 text-custom-blue-100"
+                />
+              ),
+            },
+            {
+              infoName: githubUser?.location || "",
+              infoIcon: (
+                <CIcon
+                  icon={cilLocationPin}
+                  className="h-4 w-4 text-custom-blue-100"
+                />
+              ),
+            },
+            {
+              infoName: githubUser?.blog || "",
+              infoIcon: (
+                <Icon
+                  icon="system-uicons:chain"
+                  className="h-4 w-4 text-custom-blue-100"
+                />
+              ),
+            },
+            {
+              infoName: githubUser?.twitter_username || "",
+              infoIcon: <Icon icon="hugeicons:twitter" />,
+            },
           ].filter(Boolean)}
         />
       </div>
