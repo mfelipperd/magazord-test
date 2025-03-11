@@ -25,7 +25,7 @@ export default function RepoCard({ repo, starred }: RepoCardProps) {
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sky-500 font-semibold hover:underline"
+          className="text-custom-blue-100 font-semibold hover:underline"
           onClick={(e) => e.stopPropagation()}
         >
           {repo.name}

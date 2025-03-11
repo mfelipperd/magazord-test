@@ -25,7 +25,7 @@ export default function UserProfile({
         alt="User Avatar"
         width={150}
         height={150}
-        className=" min-[733px]:w-24 min-[733px]:h-24 rounded-full shadow-md"
+        className=" w-[150px] h-[150px] rounded-full shadow-md "
       />
 
       <h1 className="text-lg font-semibold mt-2 text-gray-900">{name}</h1>
@@ -36,7 +36,7 @@ export default function UserProfile({
         <div className="w-full flex justify-center items-center">
           <button
             onClick={() => setShowMore(!showMore)}
-            className="text-sky-500  mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out  "
+            className="text-custom-blue-100  mt-2 text-sm flex items-center gap-1 transition-all duration-300 ease-in-out  "
           >
             Informações Adicionais{" "}
             <FaChevronDown
@@ -51,7 +51,7 @@ export default function UserProfile({
           } bg-gray-100 rounded-md w-full mt-2`}
         >
           {extraInfo?.map((info, index) => (
-            <p key={index} className="text-sm text-sky-600 text-start">
+            <p key={index} className="text-sm text-custom-blue-100 text-start">
               {info}
             </p>
           ))}
@@ -60,7 +60,7 @@ export default function UserProfile({
 
       <div className="hidden min-[733px]:block mt-3">
         {extraInfo?.map((info, index) => (
-          <p key={index} className="text-sm text-sky-600">
+          <p key={index} className="text-sm text-custom-blue-100">
             {info}
           </p>
         ))}

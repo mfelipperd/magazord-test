@@ -6,20 +6,20 @@
   :root {
     --background: 0 0% 97%;
     --foreground: 222.2 84% 4.9%;
-    --primary: 207, 65%, 35%; /* Azul Escuro */
-    --secondary: 210, 40%, 96.1%; /* Cinza Claro */
+    --primary: 207, 65%, 35%;
+    --secondary: 210, 40%, 96.1%;
     --muted: 210, 40%, 96.1%;
     --destructive: 0, 84.2%, 60.2%;
     --border: 214.3, 31.8%, 91.4%;
     --radius: 0.5rem;
+  }
 
-    /* 🎨 Cores Personalizadas */
-    --grayCustom-100: #f8f8f8; /* Cinza Muito Claro */
-    --grayCustom-200: #dbdbdb; /* Cinza Claro */
-    --grayCustom-300: #989898; /* Cinza Médio */
-
-    --blueCustom-100: #0587ff; /* Azul Claro */
-    --blueCustom-500: #0056a6; /* Azul Escuro */
+  @theme {
+    --color-custom-blue-100: #0587ff;
+    --color-custom-blue-500: #0056a6;
+    --color-custom-gray-100: #f8f8f8;
+    --color-custom-gray-200: #dbdbdb;
+    --color-custom-gray-300: #989898;
   }
 
   .dark {
