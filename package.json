@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@coreui/icons": "^3.0.1",
+    "@coreui/icons-react": "^2.3.0",
+    "@iconify/react": "^5.2.0",
     "@tanstack/react-query": "^5.66.0",
     "@types/react-router-dom": "^5.3.3",
     "dotenv": "^16.4.7",
