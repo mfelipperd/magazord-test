@@ -1,5 +1,5 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState, useRef, useEffect } from "react";
-import { BiChevronDown } from "react-icons/bi";
 
 interface MultiSelectProps {
   options: string[];
@@ -42,16 +42,19 @@ export default function MultiSelect({
     <div className="relative w-full max-w-xs" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center justify-between"
+        className="w-full bg-gradient-to-r from-custom-blue-500 to-custom-blue-100 text-white px-2 pr-6 py-2 rounded-full flex items-center justify-between gap-3"
       >
-        <span className="truncate">
+        <Icon
+          icon="line-md:chevron-down"
+          width={19}
+          className={`transform transition   ${isOpen ? "rotate-180" : ""}`}
+        />
+
+        <span className="truncate text-lg font-normal">
           {selectedOptions.length > 0
             ? `${selectedOptions.length} selected`
             : placeholder}
         </span>
-        <BiChevronDown
-          className={`transform transition ${isOpen ? "rotate-180" : ""}`}
-        />
       </button>
 
       {isOpen && (

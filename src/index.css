@@ -1,6 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import "tailwindcss";
 
 @tailwind utilities;
+
+@import "tailwindcss";
 
 @layer base {
   :root {
@@ -17,10 +20,12 @@
   @theme {
     --color-custom-blue-100: #0587ff;
     --color-custom-blue-500: #0056a6;
+    --color-custom-gray-50: #f4f4f4;
     --color-custom-gray-100: #f8f8f8;
     --color-custom-gray-200: #dbdbdb;
     --color-custom-gray-300: #989898;
     --color-custom-gray-900: #262626;
+    --font-roboto: "Roboto", sans-serif;
   }
 
   .dark {
@@ -28,7 +33,6 @@
     --foreground: 210, 40%, 98%;
   }
 
-  /* 🔥 Scrollbar */
   .scrollable-content {
     overflow-y: hidden;
     scrollbar-gutter: stable;
@@ -40,7 +44,6 @@
     overflow-y: auto;
   }
 
-  /* 🔥 Scrollbar Estilizada */
   ::-webkit-scrollbar {
     width: 5px;
     transition: opacity 0.3s ease;

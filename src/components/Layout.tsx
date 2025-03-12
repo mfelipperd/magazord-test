@@ -22,7 +22,7 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-white">
+    <div className="min-h-screen flex flex-col items-center bg-white font-roboto">
       <header className={"w-full bg-gray-900 flex flex-col items-center"}>
         <div className="w-full max-w-[1200px] px-4 bg-gray-900 text-white py-3 flex items-center justify-between ">
           <h1

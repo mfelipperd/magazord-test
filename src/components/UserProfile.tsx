@@ -31,11 +31,9 @@ export default function UserProfile({
         className=" w-[150px] h-[150px] rounded-full shadow-md "
       />
 
-      <h1 className="text-lg font-semibold mt-2 text-custom-gray-900 ">
-        {name}{" "}
-      </h1>
-      <p className="text-sm text-custom-gray-300">{role}</p>
-      <p className="text-sm text-custom-gray-300">{company}</p>
+      <h1 className="text-2xl font-bold mt-2 text-custom-gray-900 ">{name} </h1>
+      <p className="text-base font-normal text-custom-gray-300">{role}</p>
+      <p className="text-base font-normal text-custom-gray-300">{company}</p>
 
       <div className=" w-full  min-[733px]:hidden">
         <div className="w-full flex justify-center items-center">
@@ -61,7 +59,7 @@ export default function UserProfile({
               className="flex items-center gap-3 mt-4"
             >
               {info.infoIcon}
-              <p className="text-sm text-custom-blue-100  truncate max-w-40">
+              <p className="text-sm font-normal text-custom-blue-100  truncate max-w-40">
                 {info.infoName}
               </p>
             </div>
