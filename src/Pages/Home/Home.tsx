@@ -17,7 +17,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col min-[733px]:flex-row w-full px-0">
+    <div className="flex flex-col gap-[70px] min-[733px]:flex-row w-full">
       <div className="min-[733px]:w-[217px]">
         <UserProfile
           avatarUrl={githubUser?.avatar_url || ""}
@@ -60,7 +60,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex flex-col gap-10 w-fit">
         <Tabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}

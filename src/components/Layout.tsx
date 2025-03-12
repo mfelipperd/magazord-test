@@ -23,18 +23,21 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-white font-roboto">
-      <header className={"w-full bg-gray-900 flex flex-col items-center"}>
-        <div className="w-full max-w-[1200px] px-4 bg-gray-900 text-white py-3 flex items-center justify-between ">
-          <h1
-            className={`text-lg font-bold flex items-center gap-2  transition-all duration-700  ease-in-out overflow-hidden ${isExpanded ? " h-0 w-0" : "h-6"}`}
+      <header
+        className={"w-full bg-custom-gray-950 flex flex-col items-center "}
+      >
+        <div className="w-full max-w-[1345px] px-4 bg-custom-gray-950 h-[72px] text-white py-3 flex items-center justify-between ">
+          <div
+            className={` flex items-center gap-4  transition-all duration-700  ease-in-out overflow-hidden ${isExpanded ? " h-0 w-0" : "h-6"}`}
           >
-            <img src="/gbLogo.png" alt="GitHub" className="h-6" />
-            GitHub <span className="text-gray-400 ">/ Profile</span>
-          </h1>
+            <img src="/gbLogo.png" alt="GitHub" className="h-[30px]" />{" "}
+            <span className="text-2xl font-normal">/</span>
+            <p className="text-white text-base font-light"> Profile</p>
+          </div>
 
           <div
             onClick={() => setIsExpanded(true)}
-            className={`relative transition-all duration-700 flex items-center border-b border-gray-500  bg-gray-800 rounded-md ${
+            className={`relative transition-all duration-700 flex items-center border-b border-gray-500  bg-custom-gray-950 rounded-md ${
               isExpanded
                 ? "w-full fixed top-0 left-0 right-0  px-5 z-50"
                 : "w-10 sm:w-72"
@@ -64,7 +67,7 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className="w-full max-w-[1200px] px-4 py-6 bg-white">
+      <main className="w-full max-w-[1320px] px-4 p-10 bg-white">
         <Outlet />
       </main>
     </div>
