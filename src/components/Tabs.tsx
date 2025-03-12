@@ -31,7 +31,7 @@ export default function Tabs({
   return (
     <div className="relative flex space-x-6 pb-2 max-w-[25rem] mb-12 ">
       <div
-        className={`absolute bottom-0 left-0 w-1/2 h-[2px] bg-red-500 transition-transform duration-500 ease-in-out ${indicatorStyle}`}
+        className={`absolute bottom-2 left-0 w-1/2 h-[2px] bg-red-500 transition-transform duration-500 ease-in-out ${indicatorStyle}`}
       ></div>
 
       <button
