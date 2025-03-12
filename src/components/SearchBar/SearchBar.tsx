@@ -8,7 +8,7 @@ export default function SearchBar() {
   const { languages, repoTypes } = useGithubApi();
   const controller = useSerachBarController();
   return (
-    <div className="flex flex-col gap-3 w-full md:flex-col lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-3 w-full max-w-[800px] md:flex-col lg:flex-row lg:items-center lg:justify-start lg:gap-32">
       <div className="hidden md:flex gap-3 lg:hidden w-full max-w-56">
         <MultiSelect
           options={repoTypes}
@@ -24,7 +24,7 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-custom-gray-50 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:max-w-[600px]">
+      <div className="relative flex items-center bg-neutral-100  md:bg-white border-b border-custom-gray-50 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:min-w-[444px] lg:w-[444px] ">
         <Icon
           icon="lineicons:search-1"
           className="absolute left-3 text-custom-gray-300 cursor-pointer w-5 h-5"
@@ -53,7 +53,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search Here"
-          className="w-full bg-transparent outline-none text-gray-700 px-10 placeholder:pl-2 placeholder:text-custom-gray-300 placeholder:text-lg"
+          className="w-full  bg-transparent outline-none text-gray-700 px-10 placeholder:pl-2 placeholder:text-custom-gray-300 placeholder:text-lg"
           value={controller.searchValue}
           onFocus={() => controller.setFocus(true)}
           onBlur={controller.onBlur}

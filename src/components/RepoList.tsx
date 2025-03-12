@@ -21,7 +21,7 @@ export default function RepoList({ repositories, starred }: RepoListProps) {
   console.log(repositories[0]);
 
   return (
-    <div>
+    <div className="max-w-[769px]">
       {!repositories ||
       repositories.length === 0 ||
       !Array.isArray(repositories) ? (
