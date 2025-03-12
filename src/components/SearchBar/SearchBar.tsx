@@ -1,8 +1,8 @@
-import { BiSearch } from "react-icons/bi";
 import MultiSelect from "./components/MultiSelect";
 import MobileFilter from "./components/MobileFilter";
 import { useGithubApi } from "../../services/githubApi";
 import { useSerachBarController } from "./searchBar.controller";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function SearchBar() {
   const { languages, repoTypes } = useGithubApi();
@@ -24,10 +24,10 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-gray-300 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:max-w-[600px]">
-        <BiSearch
-          size={24}
-          className="absolute right-3 text-blue-500 cursor-pointer"
+      <div className="relative flex items-center bg-neutral-100 md:bg-white border-b border-custom-gray-50 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:max-w-[600px]">
+        <Icon
+          icon="lineicons:search-1"
+          className="absolute left-3 text-custom-gray-300 cursor-pointer w-5 h-5"
           onClick={() => controller.handleSearch(true)}
         />
 
@@ -53,7 +53,7 @@ export default function SearchBar() {
         <input
           type="text"
           placeholder="Search Here"
-          className="w-full bg-transparent outline-none text-gray-700 px-10"
+          className="w-full bg-transparent outline-none text-gray-700 px-10 placeholder:pl-2 placeholder:text-custom-gray-300 placeholder:text-lg"
           value={controller.searchValue}
           onFocus={() => controller.setFocus(true)}
           onBlur={controller.onBlur}
