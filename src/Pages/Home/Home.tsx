@@ -60,7 +60,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex flex-col w-fit">
+      <div className="flex flex-col gap-10 w-fit">
         <Tabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}

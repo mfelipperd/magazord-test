@@ -24,10 +24,10 @@ export default function SearchBar() {
         />
       </div>
 
-      <div className="relative flex items-center bg-neutral-100  md:bg-white border-b border-custom-gray-50 py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:min-w-[444px] lg:w-[444px] ">
+      <div className="relative flex items-center bg-neutral-100  md:bg-white py-5 md:py-2 px-3 pl-0 rounded-md w-full lg:min-w-[444px] lg:w-[444px] ">
         <Icon
           icon="lineicons:search-1"
-          className="absolute left-3 text-custom-gray-300 cursor-pointer w-5 h-5"
+          className="absolute left-0 text-custom-gray-300 cursor-pointer w-5 h-5"
           onClick={() => controller.handleSearch(true)}
         />
 
@@ -64,9 +64,10 @@ export default function SearchBar() {
             }
           }}
         />
+        <div className="absolute bottom-0 w-full bg-custom-gray-250 h-[1px]"></div>
       </div>
 
-      <div className="hidden lg:flex gap-3">
+      <div className="hidden lg:flex gap-4">
         <MultiSelect
           options={repoTypes}
           selectedOptions={controller.selectedRepoTypes}
