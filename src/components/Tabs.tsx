@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { FaBook, FaStar } from "react-icons/fa";
+import { BxBookBookmark } from "./icons/BookBookmark";
+import { Star } from "akar-icons";
 
 interface TabsProps {
   setActiveTab: React.Dispatch<
@@ -34,29 +35,29 @@ export default function Tabs({
       ></div>
 
       <button
-        className={`flex-1 relative flex justify-center items-center gap-3 pb-2 cursor-pointer ${
+        className={`flex-1 relative flex justify-center items-center gap-4 pb-2 cursor-pointer ${
           activeTab === "repositories"
             ? "text-black font-semibold"
             : "text-gray-400"
         }`}
         onClick={() => handleTabClick("repositories")}
       >
-        <FaBook className="text-lg" />
-        <span>Repositories</span>
-        <span className="text-sm bg-neutral-100 text-gray-500 w-[40px] border border-gray-300 py-0.5 rounded-full">
+        <BxBookBookmark className=" w-6 h-6 " />
+        <p className="text-lg font-normal ">Repositories</p>
+        <span className="text-sm bg-custom-gray-100 text-custom-gray-300 w-[40px] border border-custom-gray-200 py-0.5 rounded-full">
           {repoCount}
         </span>
       </button>
 
       <button
-        className={`flex-1 relative flex justify-center items-center gap-3 pb-2 cursor-pointer ${
+        className={`flex-1 relative flex justify-center items-center gap-4 pb-2 cursor-pointer ${
           activeTab === "starred" ? "text-black font-semibold" : "text-gray-400"
         }`}
         onClick={() => handleTabClick("starred")}
       >
-        <FaStar className="text-lg" />
-        <span>Starred</span>
-        <span className="text-sm bg-neutral-100 text-gray-500 w-[40px] border border-gray-300 py-0.5 rounded-full">
+        <Star strokeWidth={2} size={24} />
+        <p className="text-lg font-normal ">Starred</p>
+        <span className="text-sm bg-custom-gray-100 text-custom-gray-300 w-[40px] border border-custom-gray-200 py-0.5 rounded-full">
           {starredCount}
         </span>
       </button>
