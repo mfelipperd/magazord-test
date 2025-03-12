@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        reboto: ["Roboto", "sans-serif"],
+      },
       screens: {
         sm: "480px",
         md: "768px",
