@@ -23,6 +23,9 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
+      akar-icons:
+        specifier: ^1.9.31
+        version: 1.9.31(react@19.0.0)
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
@@ -737,6 +740,11 @@ packages:
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
+
+  akar-icons@1.9.31:
+    resolution: {integrity: sha512-4lbsVlla/6nsfYz8ZzxjxFlBqNgM63aJWaJYFLmDsJAJ4h6UdbQs3vhQxuuR3QEMLU8IzaTBEW8JV7glzr0RGA==}
+    peerDependencies:
+      react: '>=16'
 
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
@@ -2454,6 +2462,11 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  akar-icons@1.9.31(react@19.0.0):
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.0.0
 
   ansi-styles@4.3.0:
     dependencies:
