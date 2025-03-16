@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserProfile from "../../components/UserProfile";
 import Tabs from "../../components/Tabs";
 import RepoList from "../../components/RepoList";
@@ -7,14 +7,27 @@ import { useRepoStore } from "../../store/useRepoStore";
 import { CIcon } from "@coreui/icons-react";
 import { cilLocationPin } from "@coreui/icons";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { useGetURLParameters } from "../../hooks/getUrlParameters";
+import { useUpdateURLParams } from "../../hooks/updateUrlParameters";
 
 export default function Home() {
   const { githubUser, repositories, starredRepos, totalRepositories } =
     useRepoStore();
 
+  const { tab } = useGetURLParameters();
   const [activeTab, setActiveTab] = useState<"repositories" | "starred">(
-    "repositories",
+    tab as "repositories" | "starred",
   );
+  const updateUrl = useUpdateURLParams();
+
+  useEffect(() => {
+    if (!tab) {
+      setActiveTab("repositories");
+    }
+    if (tab) {
+      updateUrl({ tab: activeTab });
+    }
+  }, [activeTab]);
 
   return (
     <div className="flex flex-col gap-10 lg:gap-[60px] md:gap-4 min-[733px]:flex-row w-full">
