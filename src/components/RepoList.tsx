@@ -30,7 +30,10 @@ export default function RepoList({ repositories, starred }: RepoListProps) {
         </p>
       ) : (
         repositories.map((repo) => (
-          <RepoCard starred={starred} key={repo.id} repo={repo} />
+          <div className="space-y-4">
+            <RepoCard starred={starred} key={repo.id} repo={repo} />
+            <div className="h-[1px] bg-custom-gray-100 md:bg-custom-gray-50 lg:hidden w-full"></div>
+          </div>
         ))
       )}
 

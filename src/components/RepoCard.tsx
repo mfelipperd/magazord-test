@@ -19,7 +19,7 @@ export default function RepoCard({ repo, starred }: RepoCardProps) {
 
   return (
     <div
-      className="p-4 pl-0 md:border-b lg:border-none md:border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+      className="p-4 pl-0 cursor-pointer hover:bg-gray-100 transition"
       onClick={handleClick}
     >
       <div className="flex gap-1 text-lg  text-gray-900 capitalize">

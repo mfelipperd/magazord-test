@@ -42,17 +42,17 @@ export default function MobileFilter({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center justify-between md:hidden"
+        className="w-full  bg-linear-to-r  gap-[10px] p2 text-sm h-[30px] font-normal from-custom-blue-500 to-custom-blue-100 text-white px-4 pr-6 rounded-full flex items-center justify-between md:hidden"
       >
+        <BiChevronDown size={24} />
         <span className="truncate">
           {selectedOptions.length > 0
             ? selectedOptions.join(", ")
             : placeholder}
         </span>
-        <BiChevronDown />
       </button>
       <div
-        className={`fixed inset-0  bg-opacity-50 flex justify-center items-end md:hidden z-50 transition-all duration-700 ${
+        className={`fixed inset-7  bg-opacity-50 flex justify-center items-end md:hidden z-50 transition-all duration-700 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
       >
