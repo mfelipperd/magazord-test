@@ -43,7 +43,7 @@ export default function Tabs({
         onClick={() => handleTabClick("repositories")}
       >
         <BxBookBookmark className=" w-6 h-6 " />
-        <p className="text-lg font-normal ">Repositories</p>
+        <p className="lg:text-lg font-normal md:text-base ">Repositories</p>
         <span className="text-sm bg-custom-gray-100 text-custom-gray-300 w-[40px] border border-custom-gray-200 py-0.5 rounded-full">
           {repoCount}
         </span>
@@ -56,7 +56,7 @@ export default function Tabs({
         onClick={() => handleTabClick("starred")}
       >
         <Star strokeWidth={2} size={24} />
-        <p className="text-lg font-normal ">Starred</p>
+        <p className="lg:text-lg font-normal md:text-base ">Starred</p>
         <span className="text-sm bg-custom-gray-100 text-custom-gray-300 w-[40px] border border-custom-gray-200 py-0.5 rounded-full">
           {starredCount}
         </span>

@@ -17,7 +17,7 @@ export default function Home() {
   );
 
   return (
-    <div className="flex flex-col gap-[70px] min-[733px]:flex-row w-full">
+    <div className="flex flex-col lg:gap-[60px] md:gap-4 min-[733px]:flex-row w-full">
       <div className="min-[733px]:w-[217px]">
         <UserProfile
           avatarUrl={githubUser?.avatar_url || ""}
@@ -47,6 +47,8 @@ export default function Home() {
               infoName: githubUser?.blog || "",
               infoIcon: (
                 <Icon
+                  width={4}
+                  height={4}
                   icon="system-uicons:chain"
                   className="h-4 w-4 text-custom-blue-100"
                 />
@@ -60,7 +62,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex flex-col gap-10 w-fit">
+      <div className="flex flex-col gap-10 md:gap-8 w-fit">
         <Tabs
           activeTab={activeTab}
           setActiveTab={setActiveTab}
