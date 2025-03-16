@@ -42,7 +42,7 @@ export default function MobileFilter({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full bg-gradient-to-r from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center justify-between md:hidden"
+        className="w-full bg-gradient-to-r text-sm h-[30px] font-normal from-blue-800 to-blue-400 text-white px-4 py-2 rounded-full flex items-center justify-between md:hidden"
       >
         <span className="truncate">
           {selectedOptions.length > 0

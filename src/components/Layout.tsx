@@ -24,7 +24,9 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col items-center bg-white font-roboto">
       <header
-        className={"w-full bg-custom-gray-950 flex flex-col items-center "}
+        className={
+          "w-full bg-custom-gray-950 hidden md:flex lg:flex flex-col items-center "
+        }
       >
         <div className="w-full max-w-[1345px] px-4 bg-custom-gray-950 h-[72px] text-white py-3 flex items-center justify-between ">
           <div
