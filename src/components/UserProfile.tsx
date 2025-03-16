@@ -23,13 +23,19 @@ export default function UserProfile({
 
   return (
     <div className="flex flex-col gap-2  justify-center items-center text-center  min-[733px]:items-center min-[733px]:text-left min-[733px]:w-full">
-      <img
-        src={avatarUrl}
-        alt="User Avatar"
-        width={150}
-        height={150}
-        className=" lg:w-[150px] lg:h-[150px] w-[104px] md:h-[104px] rounded-full shadow-md "
-      />
+      <div className="relative">
+        <img
+          src={avatarUrl}
+          alt="User Avatar"
+          width={150}
+          height={150}
+          className="  lg:w-[150px] lg:h-[150px] w-[104px] md:h-[104px] rounded-full shadow-md "
+        />
+
+        <div className="absolute w-7 h-7 bg-white bottom-0 right-0 lg:bottom-2 lg:right-2 rounded-full flex items-center justify-center">
+          <img src="/public/emoji.png" width={12} height={12} />
+        </div>
+      </div>
 
       <div className="w-full flex flex-col items-center ">
         <h1 className="lg:text-2xl md:text-xl font-bold mt-2 text-custom-gray-900 text-center ">

@@ -1,5 +1,6 @@
+import { ChevronDown } from "akar-icons";
 import { useState, useRef, useEffect } from "react";
-import { BiChevronDown, BiX } from "react-icons/bi";
+import { BiX } from "react-icons/bi";
 
 interface MobileFilterProps {
   options: string[];
@@ -44,7 +45,7 @@ export default function MobileFilter({
         onClick={() => setIsOpen(true)}
         className="w-full  bg-linear-to-r  gap-[10px] p2 text-sm h-[30px] font-normal from-custom-blue-500 to-custom-blue-100 text-white px-4 pr-6 rounded-full flex items-center justify-between md:hidden"
       >
-        <BiChevronDown size={24} />
+        <ChevronDown size={12} strokeWidth={4} />
         <span className="truncate">
           {selectedOptions.length > 0
             ? selectedOptions.join(", ")
