@@ -8,7 +8,7 @@ export default function SearchBar() {
   const { languages, repoTypes } = useGithubApi();
   const controller = useSerachBarController();
   return (
-    <div className="flex flex-col gap-3 w-full max-w-[800px] md:flex-col lg:flex-row lg:items-center lg:justify-start lg:gap-32">
+    <div className="flex flex-col gap-3 w-full max-w-[800px] md:flex-col lg:flex-row lg:items-center lg:justify-start lg:gap-32 md:gap-6">
       <div className="hidden md:flex gap-3 lg:hidden w-full max-w-56">
         <MultiSelect
           options={repoTypes}
