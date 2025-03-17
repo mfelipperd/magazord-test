@@ -1,5 +1,6 @@
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { ChevronDown } from "akar-icons";
 import { useState, useRef, useEffect } from "react";
-import { BiChevronDown, BiX } from "react-icons/bi";
 
 interface MobileFilterProps {
   options: string[];
@@ -44,7 +45,7 @@ export default function MobileFilter({
         onClick={() => setIsOpen(true)}
         className="w-full  bg-linear-to-r  gap-[10px] p2 text-sm h-[30px] font-normal from-custom-blue-500 to-custom-blue-100 text-white px-4 pr-6 rounded-full flex items-center justify-between md:hidden"
       >
-        <BiChevronDown size={24} />
+        <ChevronDown size={12} strokeWidth={4} />
         <span className="truncate">
           {selectedOptions.length > 0
             ? selectedOptions.join(", ")
@@ -58,18 +59,21 @@ export default function MobileFilter({
       >
         <div
           ref={dropdownRef}
-          className={`fixed -bottom-0 ] bg-white w-[100%] max-h-[80vh] h-0 rounded-t-lg p-4  overflow-hidden transition-all duration-700 ${
+          className={`fixed -bottom-0  bg-white w-[100%] max-h-[80vh] h-0 rounded-t-lg p-4  overflow-hidden transition-all duration-700 ${
             isOpen ? "h-[30rem]" : "h-0"
           }`}
         >
-          <div className="bg-gray-400 h-2 rounded-full mx-44 mb-8"></div>
+          <div className="w-full flex justify-center h-8">
+            <div className="bg-custom-gray-250 h-2 rounded-full w-[100px] "></div>
+          </div>
+
           <div className="w-full flex justify-between items-center ">
             <h2 className="text-2xl font-semibold">{placeholder}</h2>
             <button
               onClick={() => setIsOpen(false)}
               className=" text-red-500 text-xl cursor-pointer"
             >
-              <BiX size={24} />
+              <Icon icon="tabler:x" className="h-6 w-6" />{" "}
             </button>
           </div>
 
@@ -86,7 +90,7 @@ export default function MobileFilter({
                   type="checkbox"
                   checked={selectedOptions.includes(option)}
                   onChange={() => toggleOption(option)}
-                  className="cursor-pointer"
+                  className="cursor-pointer w-5 h-5 border-custom-gray-270 border-[1px] mr-2"
                 />
                 <span>{option}</span>
               </div>

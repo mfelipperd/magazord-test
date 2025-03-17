@@ -1,4 +1,4 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
+import { ChevronDown } from "akar-icons";
 import { useState, useRef, useEffect } from "react";
 
 interface MultiSelectProps {
@@ -42,11 +42,11 @@ export default function MultiSelect({
     <div className="relative w-full max-w-xs" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-linear-to-r  lg:h-10 md:h-8 from-custom-blue-500 to-custom-blue-100 text-white px-2 pr-6 py-2 rounded-full flex items-center justify-between gap-3"
+        className=" bg-linear-to-r  lg:h-10 md:h-8 from-custom-blue-500 to-custom-blue-100 text-white px-2 pr-6 py-2 rounded-full flex items-center  gap-[10px]"
       >
-        <Icon
-          icon="line-md:chevron-down"
-          width={19}
+        <ChevronDown
+          size={12}
+          strokeWidth={4}
           className={`transform transition   ${isOpen ? "rotate-180" : ""}`}
         />
 
