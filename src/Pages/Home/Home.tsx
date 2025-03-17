@@ -69,7 +69,12 @@ export default function Home() {
             },
             {
               infoName: githubUser?.twitter_username || "",
-              infoIcon: <Icon icon="hugeicons:twitter" />,
+              infoIcon: (
+                <Icon
+                  icon="hugeicons:twitter"
+                  className="h-4 w-4 text-custom-blue-100"
+                />
+              ),
             },
           ].filter(Boolean)}
         />
